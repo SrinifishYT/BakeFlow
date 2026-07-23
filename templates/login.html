@@ -3,6 +3,7 @@
 
 <head>
 
+    <!-- Page setup and imported fonts/styles -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,7 +12,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -20,10 +20,10 @@
 
 <body>
 
+<!-- Main container that holds the entire login page -->
 <div class="login-container">
 
-    <!-- Left Side -->
-
+    <!-- Left panel containing the bakery branding and welcome message -->
     <div class="left-panel">
 
         <div class="overlay">
@@ -43,8 +43,7 @@
 
     </div>
 
-    <!-- Right Side -->
-
+    <!-- Right panel containing the login form -->
     <div class="right-panel">
 
         <div class="login-card">
@@ -53,6 +52,7 @@
 
             <p>Please login to continue.</p>
 
+            <!-- Displays an error message if the login details are incorrect -->
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     <div class="error">
@@ -61,6 +61,7 @@
                 {% endif %}
             {% endwith %}
 
+            <!-- Sends the user's login details to the Flask backend -->
             <form action="/login" method="POST">
 
                 <label>Email Address</label>
@@ -81,6 +82,7 @@
                     required
                 >
 
+                <!-- Additional login options -->
                 <div class="options">
 
                     <label>
@@ -95,6 +97,7 @@
 
                 </div>
 
+                <!-- Login button -->
                 <button>
 
                     Login
@@ -103,6 +106,7 @@
 
             </form>
 
+            <!-- Footer -->
             <div class="footer">
 
                 Sweet Souls Bakery © 2026

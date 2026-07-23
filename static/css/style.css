@@ -1,18 +1,34 @@
+/* ==========================================
+   RESET
+========================================== */
+
 *{
+
     margin:0;
+
     padding:0;
+
     box-sizing:border-box;
+
 }
+
+
+/* ==========================================
+   WHOLE PAGE
+========================================== */
 
 body{
 
-    font-family:Poppins,sans-serif;
+    font-family:'DM Sans',sans-serif;
 
     background:#FFF8F0;
 
 }
 
-/* Main */
+
+/* ==========================================
+   MAIN LOGIN CONTAINER
+========================================== */
 
 .login-container{
 
@@ -22,15 +38,20 @@ body{
 
 }
 
-/* Left */
+
+/* ==========================================
+   LEFT IMAGE PANEL
+========================================== */
 
 .left-panel{
 
     width:55%;
 
     background:
-    linear-gradient(rgba(92,64,51,.65),
-    rgba(92,64,51,.65)),
+    linear-gradient(
+    rgba(92,64,51,.75),
+    rgba(92,64,51,.75)
+    ),
     url("../images/bakery-bg.jpg");
 
     background-size:cover;
@@ -45,43 +66,66 @@ body{
 
 }
 
-.overlay{
 
-    color:white;
+/* Text overlay on image */
+
+.overlay{
 
     width:70%;
 
+    color:white;
+
 }
+
+
+/* Main logo */
 
 .overlay h1{
 
-    font-family:'Playfair Display';
+    font-family:'Outfit',sans-serif;
 
-    font-size:60px;
+    font-size:68px;
+
+    font-weight:800;
 
     margin-bottom:15px;
 
 }
 
+
+/* Bakery name */
+
 .overlay h2{
 
-    font-size:28px;
+    font-family:'Outfit',sans-serif;
 
-    color:#F7D6E0;
+    font-size:30px;
+
+    font-weight:600;
+
+    color:#C57B57;
 
     margin-bottom:30px;
 
 }
 
+
+/* Description */
+
 .overlay p{
 
-    line-height:1.9;
+    font-size:19px;
 
-    font-size:18px;
+    line-height:1.8;
+
+    color:#F5F5F5;
 
 }
 
-/* Right */
+
+/* ==========================================
+   RIGHT LOGIN SECTION
+========================================== */
 
 .right-panel{
 
@@ -97,23 +141,38 @@ body{
 
 }
 
+
+/* Login Card */
+
 .login-card{
 
-    width:420px;
+    width:430px;
 
     background:white;
 
-    border-radius:20px;
+    border-radius:22px;
 
     padding:45px;
 
-    box-shadow:0 15px 40px rgba(0,0,0,.12);
+    box-shadow:
+
+    0 15px 40px rgba(0,0,0,.12);
 
 }
 
+
+/* ==========================================
+   LOGIN TEXT
+========================================== */
+
+
 .login-card h2{
 
-    font-family:'Playfair Display';
+    font-family:'Outfit',sans-serif;
+
+    font-size:36px;
+
+    font-weight:700;
 
     color:#5C4033;
 
@@ -121,33 +180,49 @@ body{
 
 }
 
+
 .login-card p{
 
     color:#666;
+
+    font-size:16px;
 
     margin-bottom:30px;
 
 }
 
+
+/* ==========================================
+   FORM LABELS
+========================================== */
+
+
 label{
 
     display:block;
 
-    margin-bottom:8px;
-
     margin-top:20px;
 
-    font-weight:500;
+    margin-bottom:8px;
+
+    font-weight:600;
 
     color:#5C4033;
 
 }
 
+
+
+/* ==========================================
+   INPUT BOXES
+========================================== */
+
+
 input{
 
     width:100%;
 
-    padding:14px;
+    padding:15px;
 
     border:1px solid #ddd;
 
@@ -155,17 +230,31 @@ input{
 
     outline:none;
 
-    transition:.3s;
+    font-family:'DM Sans',sans-serif;
 
     font-size:15px;
 
+    transition:.3s;
+
 }
+
 
 input:focus{
 
-    border:1px solid #D4AF37;
+    border-color:#D4AF37;
+
+    box-shadow:
+
+    0 0 8px rgba(212,175,55,.25);
 
 }
+
+
+
+/* ==========================================
+   OPTIONS SECTION
+========================================== */
+
 
 .options{
 
@@ -173,19 +262,58 @@ input:focus{
 
     justify-content:space-between;
 
+    align-items:center;
+
     margin-top:20px;
 
     font-size:14px;
 
 }
 
-.options a{
 
-    text-decoration:none;
+.options label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin:0;
+
+}
+
+
+.options input{
+
+    width:auto;
+
+}
+
+
+.options a{
 
     color:#5C4033;
 
+    text-decoration:none;
+
+    font-weight:600;
+
 }
+
+
+.options a:hover{
+
+    color:#D4AF37;
+
+}
+
+
+
+/* ==========================================
+   LOGIN BUTTON
+========================================== */
+
 
 button{
 
@@ -193,17 +321,21 @@ button{
 
     margin-top:30px;
 
-    padding:15px;
+    padding:16px;
 
     border:none;
+
+    border-radius:40px;
 
     background:#5C4033;
 
     color:white;
 
-    font-size:16px;
+    font-family:'DM Sans',sans-serif;
 
-    border-radius:12px;
+    font-size:17px;
+
+    font-weight:600;
 
     cursor:pointer;
 
@@ -211,13 +343,45 @@ button{
 
 }
 
+
+
 button:hover{
 
     background:#7A5646;
 
-    transform:translateY(-2px);
+    transform:translateY(-3px);
 
 }
+
+
+
+/* ==========================================
+   ERROR MESSAGE
+========================================== */
+
+
+.error{
+
+    background:#FFE5E5;
+
+    color:#B60000;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:15px;
+
+    font-weight:500;
+
+}
+
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
 
 .footer{
 
@@ -231,27 +395,22 @@ button:hover{
 
 }
 
-.error{
 
-    background:#ffe5e5;
 
-    color:#b60000;
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
 
-    padding:12px;
-
-    border-radius:10px;
-
-    margin-bottom:15px;
-
-}
 
 @media(max-width:1000px){
+
 
 .login-container{
 
     flex-direction:column;
 
 }
+
 
 .left-panel{
 
@@ -261,6 +420,7 @@ button:hover{
 
 }
 
+
 .right-panel{
 
     width:100%;
@@ -269,10 +429,62 @@ button:hover{
 
 }
 
+
 .login-card{
 
     width:90%;
 
+    max-width:430px;
+
 }
+
+
+.overlay{
+
+    text-align:center;
+
+}
+
+
+.overlay h1{
+
+    font-size:52px;
+
+}
+
+
+.overlay h2{
+
+    font-size:24px;
+
+}
+
+
+}
+
+
+@media(max-width:600px){
+
+
+.overlay{
+
+    width:90%;
+
+}
+
+
+.overlay h1{
+
+    font-size:42px;
+
+}
+
+
+.login-card{
+
+    padding:30px;
+
+}
+
 
 }

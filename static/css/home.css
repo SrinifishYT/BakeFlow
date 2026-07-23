@@ -1,0 +1,395 @@
+/* ==========================================
+   Reset
+========================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+/* ==========================================
+   Whole Page
+========================================== */
+
+body{
+
+    font-family:'DM Sans',sans-serif;
+
+    background:#FFF8F3;
+
+    color:#333;
+
+}
+
+/* ==========================================
+   Navigation Bar
+========================================== */
+
+nav{
+
+    width:100%;
+
+    height:85px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 70px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+}
+
+/* Logo */
+
+.logo{
+
+    font-family:'Outfit',sans-serif;
+
+    font-size:34px;
+
+    font-weight:800;
+
+}
+
+.logo a{
+
+    text-decoration:none;
+
+    color:#5E3023;
+
+}
+
+/* Navigation Links */
+
+nav ul{
+
+    display:flex;
+
+    gap:35px;
+
+    list-style:none;
+
+}
+
+nav ul li a{
+
+    text-decoration:none;
+
+    color:#555;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+nav ul li a:hover{
+
+    color:#C57B57;
+
+}
+
+/* Right Side */
+
+.nav-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+/* Logged in username */
+
+.username{
+
+    color:#666;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+/* Logout Button */
+
+.login-btn{
+
+    text-decoration:none;
+
+    background:#C57B57;
+
+    color:white;
+
+    padding:12px 30px;
+
+    border-radius:30px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.login-btn:hover{
+
+    background:#A55D3E;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+   Hero Section
+========================================== */
+
+.hero{
+
+    min-height:calc(100vh - 85px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:60px;
+
+    background:
+
+    linear-gradient(rgba(255,248,243,.90),
+
+    rgba(255,248,243,.90)),
+
+    url("../images/hero.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+}
+
+.hero-content{
+
+    max-width:850px;
+
+}
+
+/* Main Heading */
+
+.hero h1{
+
+    font-family:'Outfit',sans-serif;
+
+    font-size:72px;
+
+    font-weight:800;
+
+    color:#5E3023;
+
+    line-height:1.1;
+
+}
+
+/* Paragraph */
+
+.hero p{
+
+    margin-top:30px;
+
+    font-size:21px;
+
+    color:#666;
+
+    line-height:1.8;
+
+}
+
+/* Buttons Container */
+
+.buttons{
+
+    margin-top:45px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+/* Remove underline from button links */
+
+.buttons a{
+
+    text-decoration:none;
+
+}
+
+/* Main Buttons */
+
+button{
+
+    padding:16px 38px;
+
+    border:none;
+
+    border-radius:40px;
+
+    cursor:pointer;
+
+    background:#C57B57;
+
+    color:white;
+
+    font-size:17px;
+
+    font-family:'DM Sans',sans-serif;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+}
+
+button:hover{
+
+    transform:translateY(-4px);
+
+    background:#A55D3E;
+
+}
+
+/* Secondary Button */
+
+.secondary{
+
+    background:white;
+
+    color:#5E3023;
+
+    border:2px solid #5E3023;
+
+}
+
+.secondary:hover{
+
+    background:#5E3023;
+
+    color:white;
+
+}
+
+/* ==========================================
+   Responsive Design
+========================================== */
+
+@media(max-width:1000px){
+
+    nav{
+
+        padding:20px;
+
+        flex-direction:column;
+
+        height:auto;
+
+        gap:20px;
+
+    }
+
+    nav ul{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+        gap:18px;
+
+    }
+
+    .nav-right{
+
+        flex-direction:column;
+
+        gap:12px;
+
+    }
+
+    .hero h1{
+
+        font-size:52px;
+
+    }
+
+    .hero p{
+
+        font-size:18px;
+
+    }
+
+}
+
+@media(max-width:650px){
+
+    .hero{
+
+        padding:30px;
+
+    }
+
+    .hero h1{
+
+        font-size:42px;
+
+    }
+
+    .hero p{
+
+        font-size:17px;
+
+    }
+
+    .buttons{
+
+        flex-direction:column;
+
+        align-items:center;
+
+    }
+
+    button{
+
+        width:240px;
+
+    }
+
+}

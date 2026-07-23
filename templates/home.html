@@ -1,15 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>BakeFlow Home</title>
+
+    <!-- Basic Page Information -->
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BakeFlow | Home</title>
+
+    <!-- Home Page CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
-<h1>Welcome {{ username }}</h1>
+    <!-- Navigation Bar -->
 
-<p>You have successfully logged in.</p>
+    <nav>
 
-<a href="/logout">Logout</a>
+        <div class="logo">
+
+            <a href="{{ url_for('home') }}">BakeFlow</a>
+
+        </div>
+
+        <ul>
+
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+
+            <li><a href="{{ url_for('products') }}">Products</a></li>
+
+            <li><a href="{{ url_for('custom_cakes') }}">Custom Cakes</a></li>
+
+            <li><a href="{{ url_for('smartbake') }}">SmartBake AI</a></li>
+
+            <li><a href="{{ url_for('orders') }}">Orders</a></li>
+
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+
+        </ul>
+
+        <div class="nav-right">
+
+            <span class="username">
+
+                Welcome, {{ username }}
+
+            </span>
+
+            <a href="{{ url_for('logout') }}" class="login-btn">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Hero Section -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+
+                Freshly Baked Happiness
+
+            </h1>
+
+            <p>
+
+                Premium cakes handcrafted for every celebration.
+
+                Browse our collection or design your own masterpiece.
+
+            </p>
+
+            <div class="buttons">
+
+                <a href="{{ url_for('products') }}">
+
+                    <button>
+
+                        Browse Cakes
+
+                    </button>
+
+                </a>
+
+                <a href="{{ url_for('custom_cakes') }}">
+
+                    <button class="secondary">
+
+                        Design Your Cake
+
+                    </button>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </body>
+
 </html>
