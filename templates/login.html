@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BakeFlow | Login</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <!-- Left Side -->
+
+    <div class="left-panel">
+
+        <div class="overlay">
+
+            <h1>BakeFlow</h1>
+
+            <h2>Sweet Souls Bakery</h2>
+
+            <p>
+                Welcome back.
+                Manage your bakery with elegance.
+                Orders, cakes, customers and SmartBake AI —
+                all in one beautiful platform.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Right Side -->
+
+    <div class="right-panel">
+
+        <div class="login-card">
+
+            <h2>Welcome Back</h2>
+
+            <p>Please login to continue.</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="error">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form action="/login" method="POST">
+
+                <label>Email Address</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <div class="options">
+
+                    <label>
+
+                        <input type="checkbox">
+
+                        Remember Me
+
+                    </label>
+
+                    <a href="#">Forgot Password?</a>
+
+                </div>
+
+                <button>
+
+                    Login
+
+                </button>
+
+            </form>
+
+            <div class="footer">
+
+                Sweet Souls Bakery © 2026
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,278 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Poppins,sans-serif;
+
+    background:#FFF8F0;
+
+}
+
+/* Main */
+
+.login-container{
+
+    display:flex;
+
+    height:100vh;
+
+}
+
+/* Left */
+
+.left-panel{
+
+    width:55%;
+
+    background:
+    linear-gradient(rgba(92,64,51,.65),
+    rgba(92,64,51,.65)),
+    url("../images/bakery-bg.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.overlay{
+
+    color:white;
+
+    width:70%;
+
+}
+
+.overlay h1{
+
+    font-family:'Playfair Display';
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+}
+
+.overlay h2{
+
+    font-size:28px;
+
+    color:#F7D6E0;
+
+    margin-bottom:30px;
+
+}
+
+.overlay p{
+
+    line-height:1.9;
+
+    font-size:18px;
+
+}
+
+/* Right */
+
+.right-panel{
+
+    width:45%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#FFF8F0;
+
+}
+
+.login-card{
+
+    width:420px;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:45px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
+
+}
+
+.login-card h2{
+
+    font-family:'Playfair Display';
+
+    color:#5C4033;
+
+    margin-bottom:10px;
+
+}
+
+.login-card p{
+
+    color:#666;
+
+    margin-bottom:30px;
+
+}
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    margin-top:20px;
+
+    font-weight:500;
+
+    color:#5C4033;
+
+}
+
+input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    outline:none;
+
+    transition:.3s;
+
+    font-size:15px;
+
+}
+
+input:focus{
+
+    border:1px solid #D4AF37;
+
+}
+
+.options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:20px;
+
+    font-size:14px;
+
+}
+
+.options a{
+
+    text-decoration:none;
+
+    color:#5C4033;
+
+}
+
+button{
+
+    width:100%;
+
+    margin-top:30px;
+
+    padding:15px;
+
+    border:none;
+
+    background:#5C4033;
+
+    color:white;
+
+    font-size:16px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:#7A5646;
+
+    transform:translateY(-2px);
+
+}
+
+.footer{
+
+    text-align:center;
+
+    margin-top:30px;
+
+    color:#888;
+
+    font-size:14px;
+
+}
+
+.error{
+
+    background:#ffe5e5;
+
+    color:#b60000;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:15px;
+
+}
+
+@media(max-width:1000px){
+
+.login-container{
+
+    flex-direction:column;
+
+}
+
+.left-panel{
+
+    width:100%;
+
+    height:35vh;
+
+}
+
+.right-panel{
+
+    width:100%;
+
+    height:65vh;
+
+}
+
+.login-card{
+
+    width:90%;
+
+}
+
+}
