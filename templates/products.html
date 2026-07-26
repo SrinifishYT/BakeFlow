@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic Page Information -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BakeFlow | Products</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+
+<nav>
+
+    <div class="logo">
+        <a href="{{ url_for('home') }}">BakeFlow</a>
+    </div>
+
+    <ul>
+
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+
+        <li><a class="active" href="{{ url_for('products') }}">Products</a></li>
+
+        <li><a href="{{ url_for('custom_cakes') }}">Custom Cakes</a></li>
+
+        <li><a href="{{ url_for('smartbake') }}">SmartBake AI</a></li>
+
+        <li><a href="{{ url_for('orders') }}">Orders</a></li>
+
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+
+    </ul>
+
+    <div class="nav-right">
+
+        <span>Welcome, {{ username }}</span>
+
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+
+    </div>
+
+</nav>
+
+<!-- Page Heading -->
+
+<section class="page-header">
+
+    <h1>Our Bakery Collection</h1>
+
+    <p>
+
+        Browse handcrafted cakes made fresh every day.
+
+    </p>
+
+</section>
+
+<!-- Search -->
+
+<section class="search-section">
+
+    <input
+        type="text"
+        placeholder="Search cakes..."
+    >
+
+    <select>
+
+        <option>Sort By</option>
+        <option>Price (Low to High)</option>
+        <option>Price (High to Low)</option>
+        <option>Best Selling</option>
+        <option>Newest</option>
+
+    </select>
+
+</section>
+
+<!-- Main Content -->
+
+<div class="products-container">
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+<h2>Categories</h2>
+
+<ul>
+
+<li>Birthday Cakes</li>
+
+<li>Wedding Cakes</li>
+
+<li>Cupcakes</li>
+
+<li>Cookies</li>
+
+<li>Brownies</li>
+
+<li>Cheesecakes</li>
+
+</ul>
+
+<h2>Price</h2>
+
+<ul>
+
+<li>Under $30</li>
+
+<li>$30 - $60</li>
+
+<li>$60+</li>
+
+</ul>
+
+</aside>
+
+<!-- Products -->
+
+<section class="products-grid">
+
+<!-- Card -->
+
+<div class="product-card">
+
+<img src="{{ url_for('static', filename='images/chocolate-cake.jpg') }}">
+
+<h3>Chocolate Dream</h3>
+
+<p>
+
+Rich chocolate sponge layered with silky ganache.
+
+</p>
+
+<div class="price">
+
+$55
+
+</div>
+
+<div class="buttons">
+
+<button>View Details</button>
+
+<button class="cart">Add to Cart</button>
+
+</div>
+
+</div>
+
+<!-- Card -->
+
+<div class="product-card">
+
+<img src="{{ url_for('static', filename='images/red-velvet.jpg') }}">
+
+<h3>Red Velvet</h3>
+
+<p>
+
+Classic red velvet with cream cheese frosting.
+
+</p>
+
+<div class="price">
+
+$62
+
+</div>
+
+<div class="buttons">
+
+<button>View Details</button>
+
+<button class="cart">Add to Cart</button>
+
+</div>
+
+</div>
+
+<!-- Card -->
+
+<div class="product-card">
+
+<img src="{{ url_for('static', filename='images/lotus-cake.jpg') }}">
+
+<h3>Lotus Biscoff</h3>
+
+<p>
+
+Lotus cream, caramel and crunchy biscuit layers.
+
+</p>
+
+<div class="price">
+
+$70
+
+</div>
+
+<div class="buttons">
+
+<button>View Details</button>
+
+<button class="cart">Add to Cart</button>
+
+</div>
+
+</div>
+
+<!-- Card -->
+
+<div class="product-card">
+
+<img src="{{ url_for('static', filename='images/strawberry-cake.jpg') }}">
+
+<h3>Strawberry Delight</h3>
+
+<p>
+
+Fresh strawberries with vanilla sponge.
+
+</p>
+
+<div class="price">
+
+$58
+
+</div>
+
+<div class="buttons">
+
+<button>View Details</button>
+
+<button class="cart">Add to Cart</button>
+
+</div>
+
+</div>
+
+<!-- Card -->
+
+<div class="product-card">
+
+<img src="{{ url_for('static', filename='images/oreo-cake.jpg') }}">
+
+<h3>Oreo Explosion</h3>
+
+<p>
+
+Chocolate sponge loaded with Oreo pieces.
+
+</p>
+
+<div class="price">
+
+$64
+
+</div>
+
+<div class="buttons">
+
+<button>View Details</button>
+
+<button class="cart">Add to Cart</button>
+
+</div>
+
+</div>
+
+<!-- Card -->
+
+<div class="product-card">
+
+<img src="{{ url_for('static', filename='images/vanilla-cake.jpg') }}">
+
+<h3>Vanilla Bliss</h3>
+
+<p>
+
+Classic vanilla buttercream celebration cake.
+
+</p>
+
+<div class="price">
+
+$48
+
+</div>
+
+<div class="buttons">
+
+<button>View Details</button>
+
+<button class="cart">Add to Cart</button>
+
+</div>
+
+</div>
+
+<!-- Card -->
+
+<div class="product-card">
+
+<img src="{{ url_for('static', filename='images/caramel-cake.jpg') }}">
+
+<h3>Salted Caramel</h3>
+
+<p>
+
+Salted caramel buttercream with caramel drip.
+
+</p>
+
+<div class="price">
+
+$66
+
+</div>
+
+<div class="buttons">
+
+<button>View Details</button>
+
+<button class="cart">Add to Cart</button>
+
+</div>
+
+</div>
+
+<!-- Card -->
+
+<div class="product-card">
+
+<img src="{{ url_for('static', filename='images/rainbow-cake.jpg') }}">
+
+<h3>Rainbow Celebration</h3>
+
+<p>
+
+Bright rainbow sponge perfect for birthdays.
+
+</p>
+
+<div class="price">
+
+$72
+
+</div>
+
+<div class="buttons">
+
+<button>View Details</button>
+
+<button class="cart">Add to Cart</button>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<!-- Footer -->
+
+<footer>
+
+<p>
+
+© 2026 Sweet Souls Bakery | BakeFlow
+
+</p>
+
+</footer>
+
+</body>
+
+</html>

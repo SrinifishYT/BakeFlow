@@ -14,16 +14,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-<!-- Main container that holds the entire login page -->
 <div class="login-container">
 
-    <!-- Left panel containing the bakery branding and welcome message -->
+    <!-- Left branding panel -->
     <div class="left-panel">
 
         <div class="overlay">
@@ -33,17 +32,22 @@
             <h2>Sweet Souls Bakery</h2>
 
             <p>
+
                 Welcome back.
+
                 Manage your bakery with elegance.
+
                 Orders, cakes, customers and SmartBake AI —
+
                 all in one beautiful platform.
+
             </p>
 
         </div>
 
     </div>
 
-    <!-- Right panel containing the login form -->
+    <!-- Login Panel -->
     <div class="right-panel">
 
         <div class="login-card">
@@ -52,17 +56,19 @@
 
             <p>Please login to continue.</p>
 
-            <!-- Displays an error message if the login details are incorrect -->
+            <!-- Flash Messages -->
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     <div class="error">
+
                         {{ messages[0] }}
+
                     </div>
                 {% endif %}
             {% endwith %}
 
-            <!-- Sends the user's login details to the Flask backend -->
-            <form action="/login" method="POST">
+            <!-- Login Form -->
+            <form action="{{ url_for('login_user') }}" method="POST">
 
                 <label>Email Address</label>
 
@@ -82,10 +88,10 @@
                     required
                 >
 
-                <!-- Additional login options -->
+                <!-- Extra Options -->
                 <div class="options">
 
-                    <label>
+                    <label class="remember">
 
                         <input type="checkbox">
 
@@ -97,14 +103,31 @@
 
                 </div>
 
-                <!-- Login button -->
-                <button>
+                <!-- Login Button -->
+                <button type="submit">
 
                     Login
 
                 </button>
 
             </form>
+
+            <!-- Registration Link -->
+            <div class="register-link">
+
+                <p>
+
+                    Don't have an account?
+
+                    <a href="{{ url_for('register') }}">
+
+                        Create Account
+
+                    </a>
+
+                </p>
+
+            </div>
 
             <!-- Footer -->
             <div class="footer">

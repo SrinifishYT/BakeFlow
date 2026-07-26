@@ -18,22 +18,26 @@ DATABASE = "bakeflow.db"
 
 # This function connects to the SQLite database
 # and allows the data to be accessed by column names.
+
+# ==========================================
+# Create Database
+# ==========================================
+
+# ==========================================
+# Connect to the database
+# ==========================================
+
+# This function connects to the SQLite database
+# and allows the data to be accessed by column names.
+
 def get_db_connection():
 
     connection = sqlite3.connect(DATABASE)
+
     connection.row_factory = sqlite3.Row
 
     return connection
 
-
-# ==========================================
-# Create the database and users table
-# ==========================================
-
-# This function creates the database table if
-# it does not already exist. It also creates
-# a default admin account the first time the
-# application is run.
 def create_database():
 
     connection = get_db_connection()
@@ -50,7 +54,23 @@ def create_database():
 
         email TEXT UNIQUE NOT NULL,
 
+        phone TEXT NOT NULL,
+
         password TEXT NOT NULL,
+
+        street TEXT NOT NULL,
+
+        suburb TEXT NOT NULL,
+
+        state TEXT NOT NULL,
+
+        postcode TEXT NOT NULL,
+
+        favourite_cake TEXT,
+
+        dietary TEXT,
+
+        marketing INTEGER,
 
         role TEXT NOT NULL
 
@@ -59,7 +79,7 @@ def create_database():
 
     connection.commit()
 
-    # Check if the admin account already exists
+    # Check whether the admin account already exists
 
     cursor.execute(
         "SELECT * FROM users WHERE email=?",
@@ -68,24 +88,49 @@ def create_database():
 
     admin = cursor.fetchone()
 
-    # Create the default admin account if it
-    # cannot be found in the database.
+    # Create the admin account the first time
     if admin is None:
 
         hashed_password = generate_password_hash("Admin123")
 
         cursor.execute("""
-        INSERT INTO users
-        (first_name, last_name, email, password, role)
 
-        VALUES (?, ?, ?, ?, ?)
-        """,
-        (
+        INSERT INTO users(
+
+            first_name,
+            last_name,
+            email,
+            phone,
+            password,
+            street,
+            suburb,
+            state,
+            postcode,
+            favourite_cake,
+            dietary,
+            marketing,
+            role
+
+        )
+
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+
+        """,(
+
             "Sweet",
             "Souls",
             "admin@sweetsouls.com",
+            "0400000000",
             hashed_password,
+            "Bakery Street",
+            "Melbourne",
+            "Victoria",
+            "3000",
+            "",
+            "",
+            0,
             "Admin"
+
         ))
 
         connection.commit()
@@ -185,10 +230,23 @@ def home():
 # Products Page
 # ==========================================
 
+# Displays the products page.
+# Users must be logged in before they can
+# access this page.
 @app.route("/products")
 def products():
 
-    return "<h1>Products Page Coming Soon</h1>"
+    # Redirect to the login page if the user
+    # is not currently logged in.
+    if "user" not in session:
+        return redirect("/login")
+
+    # Open the products page and pass the
+    # username into the HTML template.
+    return render_template(
+        "products.html",
+        username=session["user"]
+    )
 
 
 # ==========================================
@@ -245,16 +303,120 @@ def logout():
 
 
 # ==========================================
-# Register Page (Coming Soon)
+# Register Page
 # ==========================================
 
-# Placeholder page for future user registration.
 @app.route("/register")
 def register():
 
-    return "<h1>Registration Coming Soon</h1>"
+    return render_template("register.html")
 
+# ==========================================
+# Register User
+# ==========================================
 
+@app.route("/register", methods=["POST"])
+def register_user():
+
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    email = request.form["email"]
+    phone = request.form["phone"]
+
+    street = request.form["street"]
+    suburb = request.form["suburb"]
+    state = request.form["state"]
+    postcode = request.form["postcode"]
+
+    favourite_cake = request.form["favourite_cake"]
+    dietary = request.form["dietary"]
+
+    password = request.form["password"]
+    confirm_password = request.form["confirm_password"]
+
+    marketing = 1 if "marketing" in request.form else 0
+
+    # Check passwords match
+
+    if password != confirm_password:
+
+        flash("Passwords do not match.")
+
+        return redirect("/register")
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    # Check email doesn't already exist
+
+    cursor.execute(
+
+        "SELECT * FROM users WHERE email=?",
+
+        (email,)
+
+    )
+
+    existing_user = cursor.fetchone()
+
+    if existing_user:
+
+        connection.close()
+
+        flash("Email already registered.")
+
+        return redirect("/register")
+
+    hashed_password = generate_password_hash(password)
+
+    cursor.execute("""
+
+    INSERT INTO users(
+
+        first_name,
+        last_name,
+        email,
+        phone,
+        password,
+        street,
+        suburb,
+        state,
+        postcode,
+        favourite_cake,
+        dietary,
+        marketing,
+        role
+
+    )
+
+    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+
+    """,(
+
+        first_name,
+        last_name,
+        email,
+        phone,
+        hashed_password,
+        street,
+        suburb,
+        state,
+        postcode,
+        favourite_cake,
+        dietary,
+        marketing,
+        "Customer"
+
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+    flash("Account created successfully. Please login.")
+
+    return redirect("/login")
+    
 # ==========================================
 # Run the Application
 # ==========================================

@@ -488,3 +488,37 @@ button:hover{
 
 
 }
+
+/* Create Account Link */
+
+.register-link{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    font-size:15px;
+
+    color:#666;
+
+}
+
+.register-link a{
+
+    color:#5E3023;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.register-link a:hover{
+
+    color:#7A5646;
+
+    text-decoration:underline;
+
+}

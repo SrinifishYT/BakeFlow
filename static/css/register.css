@@ -1,0 +1,394 @@
+/* ==========================================
+   Reset
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'DM Sans',sans-serif;
+
+    background:#FFF8F3;
+
+}
+
+/* ==========================================
+   Main Layout
+========================================== */
+
+.register-container{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+/* ==========================================
+   Left Side
+========================================== */
+
+.left-panel{
+
+    width:45%;
+
+    background:
+    linear-gradient(rgba(94,48,35,.70),
+    rgba(94,48,35,.70)),
+    url("../images/bakery-bg.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.overlay{
+
+    width:75%;
+
+    color:white;
+
+}
+
+.overlay h1{
+
+    font-family:'Outfit',sans-serif;
+
+    font-size:62px;
+
+    margin-bottom:15px;
+
+}
+
+.overlay h2{
+
+    font-size:30px;
+
+    font-weight:500;
+
+    margin-bottom:30px;
+
+    color:#F5D5C7;
+
+}
+
+.overlay p{
+
+    font-size:18px;
+
+    line-height:1.9;
+
+}
+
+/* ==========================================
+   Right Side
+========================================== */
+
+.right-panel{
+
+    width:55%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+}
+
+.register-card{
+
+    width:100%;
+
+    max-width:700px;
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:45px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.10);
+
+}
+
+.register-card h2{
+
+    font-family:'Outfit',sans-serif;
+
+    color:#5E3023;
+
+    font-size:36px;
+
+    margin-bottom:8px;
+
+}
+
+.register-card p{
+
+    color:#777;
+
+    margin-bottom:30px;
+
+}
+
+.register-card h3{
+
+    color:#5E3023;
+
+    margin-top:30px;
+
+    margin-bottom:18px;
+
+    font-size:22px;
+
+    font-family:'Outfit',sans-serif;
+
+    border-bottom:2px solid #EEE;
+
+    padding-bottom:8px;
+
+}
+
+/* ==========================================
+   Form
+========================================== */
+
+.row{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+}
+
+label{
+
+    display:block;
+
+    margin-top:18px;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#444;
+
+}
+
+input,
+select{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #DDD;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.3s;
+
+    background:white;
+
+}
+
+input:focus,
+select:focus{
+
+    border:1px solid #5E3023;
+
+}
+
+/* ==========================================
+   Checkbox
+========================================== */
+
+.checkbox{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:25px;
+
+}
+
+.checkbox input{
+
+    width:18px;
+
+    height:18px;
+
+}
+
+.checkbox span{
+
+    color:#555;
+
+    font-size:15px;
+
+}
+
+/* ==========================================
+   Button
+========================================== */
+
+button{
+
+    width:100%;
+
+    margin-top:35px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#5E3023;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:#744638;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+   Login Link
+========================================== */
+
+.login-link{
+
+    margin-top:30px;
+
+    text-align:center;
+
+    color:#666;
+
+}
+
+.login-link a{
+
+    color:#5E3023;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+}
+
+.login-link a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ==========================================
+   Flash Message
+========================================== */
+
+.error{
+
+    background:#FFE6E6;
+
+    color:#B30000;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media(max-width:1100px){
+
+.register-container{
+
+    flex-direction:column;
+
+}
+
+.left-panel{
+
+    width:100%;
+
+    height:300px;
+
+}
+
+.right-panel{
+
+    width:100%;
+
+}
+
+.register-card{
+
+    max-width:95%;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.row{
+
+    grid-template-columns:1fr;
+
+}
+
+.overlay h1{
+
+    font-size:48px;
+
+}
+
+.register-card{
+
+    padding:30px;
+
+}
+
+}

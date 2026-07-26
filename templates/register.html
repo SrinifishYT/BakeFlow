@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic Page Information -->
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BakeFlow | Create Account</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <!-- Left Side -->
+
+    <div class="left-panel">
+
+        <div class="overlay">
+
+            <h1>BakeFlow</h1>
+
+            <h2>Sweet Souls Bakery</h2>
+
+            <p>
+
+                Create your customer account to order cakes, track your orders,
+                save your favourite designs and receive exclusive offers from
+                Sweet Souls Bakery.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Right Side -->
+
+    <div class="right-panel">
+
+        <div class="register-card">
+
+            <h2>Create Your Account</h2>
+
+            <p>Fill in the details below to get started.</p>
+
+            <!-- Flash Messages -->
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="error">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form action="/register" method="POST">
+
+                <!-- Personal Information -->
+
+                <h3>Personal Information</h3>
+
+                <div class="row">
+
+                    <div>
+
+                        <label>First Name</label>
+
+                        <input
+                            type="text"
+                            name="first_name"
+                            required
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label>Last Name</label>
+
+                        <input
+                            type="text"
+                            name="last_name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+                <label>Email Address</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    required
+                >
+
+                <label>Phone Number</label>
+
+                <input
+                    type="tel"
+                    name="phone"
+                    placeholder="04XXXXXXXX"
+                    required
+                >
+
+                <!-- Address -->
+
+                <h3>Delivery Address</h3>
+
+                <label>Street Address</label>
+
+                <input
+                    type="text"
+                    name="street"
+                    required
+                >
+
+                <div class="row">
+
+                    <div>
+
+                        <label>Suburb</label>
+
+                        <input
+                            type="text"
+                            name="suburb"
+                            required
+                        >
+
+                    </div>
+
+                    <div>
+
+                        <label>State</label>
+
+                        <select name="state">
+
+                            <option>Victoria</option>
+
+                            <option>New South Wales</option>
+
+                            <option>Queensland</option>
+
+                            <option>South Australia</option>
+
+                            <option>Western Australia</option>
+
+                            <option>Tasmania</option>
+
+                            <option>Northern Territory</option>
+
+                            <option>ACT</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <label>Postcode</label>
+
+                <input
+                    type="text"
+                    name="postcode"
+                    required
+                >
+
+                <!-- Preferences -->
+
+                <h3>Cake Preferences</h3>
+
+                <label>Favourite Cake</label>
+
+                <select name="favourite_cake">
+
+                    <option>Chocolate</option>
+
+                    <option>Vanilla</option>
+
+                    <option>Red Velvet</option>
+
+                    <option>Lotus Biscoff</option>
+
+                    <option>Cheesecake</option>
+
+                    <option>Strawberry</option>
+
+                </select>
+
+                <label>Dietary Requirements</label>
+
+                <select name="dietary">
+
+                    <option>None</option>
+
+                    <option>Gluten Free</option>
+
+                    <option>Nut Free</option>
+
+                    <option>Dairy Free</option>
+
+                    <option>Vegan</option>
+
+                </select>
+
+                <!-- Account -->
+
+                <h3>Account Security</h3>
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    required
+                >
+
+                <label>Confirm Password</label>
+
+                <input
+                    type="password"
+                    name="confirm_password"
+                    required
+                >
+
+                <div class="checkbox">
+
+                    <input
+                        type="checkbox"
+                        name="marketing"
+                    >
+
+                    <span>
+
+                        I'd like to receive bakery promotions and special offers.
+
+                    </span>
+
+                </div>
+
+                <button type="submit">
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+            <div class="login-link">
+
+                Already have an account?
+
+                <a href="{{ url_for('login') }}">
+
+                    Login Here
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
