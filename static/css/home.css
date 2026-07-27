@@ -3,13 +3,13 @@
 ========================================== */
 
 *{
-
     margin:0;
-
     padding:0;
-
     box-sizing:border-box;
+}
 
+html{
+    scroll-behavior:smooth;
 }
 
 /* ==========================================
@@ -17,147 +17,158 @@
 ========================================== */
 
 body{
-
     font-family:'DM Sans',sans-serif;
-
     background:#FFF8F3;
-
     color:#333;
-
 }
 
 /* ==========================================
    Navigation Bar
 ========================================== */
 
-nav{
-
+.main-nav{
     width:100%;
-
-    height:85px;
-
-    background:white;
+    min-height:82px;
 
     display:flex;
-
+    align-items:center;
     justify-content:space-between;
 
-    align-items:center;
+    gap:28px;
 
-    padding:0 70px;
+    padding:14px 48px;
 
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    background:#ffffff;
+
+    box-shadow:0 4px 18px rgba(0,0,0,.08);
 
     position:sticky;
-
     top:0;
-
     z-index:1000;
-
 }
 
 /* Logo */
 
 .logo{
-
-    font-family:'Outfit',sans-serif;
-
-    font-size:34px;
-
-    font-weight:800;
-
+    flex-shrink:0;
 }
 
 .logo a{
+    font-family:'Outfit',sans-serif;
+    font-size:32px;
+    font-weight:800;
+
+    color:#5C4033;
 
     text-decoration:none;
-
-    color:#5E3023;
-
+    white-space:nowrap;
 }
 
-/* Navigation Links */
+/* Navigation links */
 
-nav ul{
+.nav-links{
+    flex:1;
 
     display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
 
-    gap:35px;
+    gap:8px 20px;
 
     list-style:none;
-
 }
 
-nav ul li a{
-
-    text-decoration:none;
-
-    color:#555;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    transition:.3s;
-
+.nav-links li{
+    flex-shrink:0;
 }
 
-nav ul li a:hover{
+.nav-links a{
+    display:block;
 
-    color:#C57B57;
-
-}
-
-/* Right Side */
-
-.nav-right{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:20px;
-
-}
-
-/* Logged in username */
-
-.username{
-
-    color:#666;
+    padding:9px 3px;
 
     font-size:15px;
-
     font-weight:600;
 
-}
-
-/* Logout Button */
-
-.login-btn{
+    color:#444;
 
     text-decoration:none;
+    white-space:nowrap;
 
-    background:#C57B57;
+    transition:.25s;
+}
 
-    color:white;
+.nav-links a:hover,
+.nav-links a.active{
+    color:#5C4033;
+}
 
-    padding:12px 30px;
+/* Right side of navbar */
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+
+    gap:14px;
+
+    flex-shrink:0;
+}
+
+.username{
+    color:#666;
+
+    font-size:14px;
+    font-weight:600;
+
+    white-space:nowrap;
+}
+
+/* Logout button */
+
+.logout-btn{
+    display:inline-block;
+
+    padding:11px 22px;
 
     border-radius:30px;
 
-    font-weight:600;
+    background:#5C4033;
+    color:#ffffff;
 
-    transition:.3s;
+    font-size:14px;
+    font-weight:700;
 
+    text-decoration:none;
+    white-space:nowrap;
+
+    transition:.25s;
 }
 
-.login-btn:hover{
-
-    background:#A55D3E;
-
+.logout-btn:hover{
+    background:#7A5646;
     transform:translateY(-2px);
+}
 
+/* ==========================================
+   Flash Message
+========================================== */
+
+.flash-message{
+    width:90%;
+    max-width:1100px;
+
+    margin:20px auto 0;
+    padding:14px 18px;
+
+    border-radius:10px;
+
+    background:#e8f7e8;
+    color:#2f6b35;
+
+    text-align:center;
+    font-weight:600;
 }
 
 /* ==========================================
@@ -165,231 +176,253 @@ nav ul li a:hover{
 ========================================== */
 
 .hero{
-
-    min-height:calc(100vh - 85px);
+    min-height:calc(100vh - 82px);
 
     display:flex;
-
     justify-content:center;
-
     align-items:center;
 
     text-align:center;
 
-    padding:60px;
+    padding:60px 30px;
 
     background:
-
-    linear-gradient(rgba(255,248,243,.90),
-
-    rgba(255,248,243,.90)),
-
-    url("../images/hero.jpg");
+        linear-gradient(
+            rgba(255,248,243,.90),
+            rgba(255,248,243,.90)
+        ),
+        url("../images/hero.jpg");
 
     background-size:cover;
-
     background-position:center;
-
 }
 
 .hero-content{
-
     max-width:850px;
-
 }
 
-/* Main Heading */
+/* Small label above heading */
+
+.hero-label{
+    margin-bottom:18px;
+
+    font-size:15px;
+    font-weight:700;
+
+    letter-spacing:2px;
+    text-transform:uppercase;
+
+    color:#7A5646;
+}
+
+/* Main heading */
 
 .hero h1{
-
     font-family:'Outfit',sans-serif;
 
     font-size:72px;
-
     font-weight:800;
 
     color:#5E3023;
 
     line-height:1.1;
-
 }
 
-/* Paragraph */
+/* Hero paragraph */
 
-.hero p{
-
+.hero-description{
     margin-top:30px;
 
     font-size:21px;
-
-    color:#666;
-
     line-height:1.8;
 
-}
-
-/* Buttons Container */
-
-.buttons{
-
-    margin-top:45px;
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:20px;
-
-    flex-wrap:wrap;
-
-}
-
-/* Remove underline from button links */
-
-.buttons a{
-
-    text-decoration:none;
-
-}
-
-/* Main Buttons */
-
-button{
-
-    padding:16px 38px;
-
-    border:none;
-
-    border-radius:40px;
-
-    cursor:pointer;
-
-    background:#C57B57;
-
-    color:white;
-
-    font-size:17px;
-
-    font-family:'DM Sans',sans-serif;
-
-    font-weight:600;
-
-    transition:.3s;
-
-    box-shadow:0 10px 20px rgba(0,0,0,.08);
-
-}
-
-button:hover{
-
-    transform:translateY(-4px);
-
-    background:#A55D3E;
-
-}
-
-/* Secondary Button */
-
-.secondary{
-
-    background:white;
-
-    color:#5E3023;
-
-    border:2px solid #5E3023;
-
-}
-
-.secondary:hover{
-
-    background:#5E3023;
-
-    color:white;
-
+    color:#666;
 }
 
 /* ==========================================
-   Responsive Design
+   Hero Buttons
 ========================================== */
 
-@media(max-width:1000px){
+.buttons{
+    margin-top:45px;
 
-    nav{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
 
-        padding:20px;
+    gap:20px;
+}
 
-        flex-direction:column;
+.primary-btn,
+.secondary-btn{
+    display:inline-block;
 
-        height:auto;
+    padding:16px 36px;
 
-        gap:20px;
+    border-radius:40px;
 
-    }
+    font-family:'DM Sans',sans-serif;
+    font-size:17px;
+    font-weight:700;
 
-    nav ul{
+    text-decoration:none;
 
+    transition:.3s;
+}
+
+/* Main button */
+
+.primary-btn{
+    background:#5C4033;
+    color:white;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+}
+
+.primary-btn:hover{
+    background:#7A5646;
+    transform:translateY(-4px);
+}
+
+/* Secondary button */
+
+.secondary-btn{
+    background:white;
+    color:#5C4033;
+
+    border:2px solid #5C4033;
+}
+
+.secondary-btn:hover{
+    background:#5C4033;
+    color:white;
+
+    transform:translateY(-4px);
+}
+
+/* ==========================================
+   Tablet Navigation
+========================================== */
+
+@media(max-width:1150px){
+
+    .main-nav{
         flex-wrap:wrap;
-
         justify-content:center;
 
-        gap:18px;
+        padding:16px 30px;
+    }
 
+    .logo{
+        order:1;
     }
 
     .nav-right{
+        order:2;
 
-        flex-direction:column;
+        margin-left:auto;
+    }
 
-        gap:12px;
+    .nav-links{
+        order:3;
 
+        width:100%;
+        flex-basis:100%;
+
+        padding-top:10px;
+
+        border-top:1px solid #eeeeee;
     }
 
     .hero h1{
-
-        font-size:52px;
-
+        font-size:56px;
     }
 
-    .hero p{
-
-        font-size:18px;
-
+    .hero-description{
+        font-size:19px;
     }
-
 }
 
-@media(max-width:650px){
+/* ==========================================
+   Mobile Navigation
+========================================== */
+
+@media(max-width:700px){
+
+    .main-nav{
+        flex-direction:column;
+
+        gap:14px;
+
+        padding:18px 20px;
+    }
+
+    .nav-right{
+        width:100%;
+
+        justify-content:center;
+        flex-wrap:wrap;
+
+        margin-left:0;
+    }
+
+    .nav-links{
+        width:100%;
+
+        gap:8px 14px;
+
+        padding-top:12px;
+    }
+
+    .nav-links a{
+        font-size:14px;
+    }
+
+    .username{
+        text-align:center;
+    }
 
     .hero{
+        min-height:calc(100vh - 180px);
 
-        padding:30px;
-
+        padding:45px 24px;
     }
 
     .hero h1{
-
-        font-size:42px;
-
+        font-size:44px;
     }
 
-    .hero p{
-
+    .hero-description{
         font-size:17px;
-
     }
 
     .buttons{
-
         flex-direction:column;
-
-        align-items:center;
-
     }
 
-    button{
-
+    .primary-btn,
+    .secondary-btn{
         width:240px;
+    }
+}
 
+/* ==========================================
+   Small Phones
+========================================== */
+
+@media(max-width:450px){
+
+    .logo a{
+        font-size:28px;
+    }
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .hero-label{
+        font-size:13px;
     }
 
 }

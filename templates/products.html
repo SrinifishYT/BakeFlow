@@ -3,394 +3,477 @@
 
 <head>
 
-    <!-- Basic Page Information -->
+    <!-- Basic page information -->
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>BakeFlow | Products</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+    <!-- Products page stylesheet -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/products.css') }}"
+    >
 
-    <!-- Fonts -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
 </head>
 
 <body>
 
-<!-- Navigation -->
+    <!-- Navigation bar -->
 
-<nav>
+    <nav class="main-nav">
 
-    <div class="logo">
-        <a href="{{ url_for('home') }}">BakeFlow</a>
-    </div>
+        <!-- BakeFlow logo -->
 
-    <ul>
+        <div class="logo">
 
-        <li><a href="{{ url_for('home') }}">Home</a></li>
+            <a href="{{ url_for('home') }}">
 
-        <li><a class="active" href="{{ url_for('products') }}">Products</a></li>
+                BakeFlow
 
-        <li><a href="{{ url_for('custom_cakes') }}">Custom Cakes</a></li>
+            </a>
 
-        <li><a href="{{ url_for('smartbake') }}">SmartBake AI</a></li>
+        </div>
 
-        <li><a href="{{ url_for('orders') }}">Orders</a></li>
+        <!-- Main navigation links -->
 
-        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        <ul class="nav-links">
 
-    </ul>
+            <li>
 
-    <div class="nav-right">
+                <a href="{{ url_for('home') }}">
 
-        <span>Welcome, {{ username }}</span>
+                    Home
 
-        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+                </a>
 
-    </div>
+            </li>
 
-</nav>
+            <li>
 
-<!-- Page Heading -->
+                <a
+                    class="active"
+                    href="{{ url_for('products') }}"
+                >
 
-<section class="page-header">
+                    Products
 
-    <h1>Our Bakery Collection</h1>
+                </a>
 
-    <p>
+            </li>
 
-        Browse handcrafted cakes made fresh every day.
+            <li>
 
-    </p>
+                <a href="{{ url_for('custom_cakes') }}">
 
-</section>
+                    Custom Cakes
 
-<!-- Search -->
+                </a>
 
-<section class="search-section">
+            </li>
 
-    <input
-        type="text"
-        placeholder="Search cakes..."
-    >
+            <li>
 
-    <select>
+                <a href="{{ url_for('smartbake') }}">
 
-        <option>Sort By</option>
-        <option>Price (Low to High)</option>
-        <option>Price (High to Low)</option>
-        <option>Best Selling</option>
-        <option>Newest</option>
+                    SmartBake AI
 
-    </select>
+                </a>
 
-</section>
+            </li>
 
-<!-- Main Content -->
+            <li>
 
-<div class="products-container">
+                <a href="{{ url_for('orders') }}">
 
-<!-- Sidebar -->
+                    Orders
 
-<aside class="sidebar">
+                </a>
 
-<h2>Categories</h2>
+            </li>
 
-<ul>
+            <li>
 
-<li>Birthday Cakes</li>
+                <a href="{{ url_for('contact') }}">
 
-<li>Wedding Cakes</li>
+                    Contact
 
-<li>Cupcakes</li>
+                </a>
 
-<li>Cookies</li>
+            </li>
 
-<li>Brownies</li>
+            <li>
 
-<li>Cheesecakes</li>
+                <a href="{{ url_for('cart') }}">
 
-</ul>
+                    🛒 Cart
 
-<h2>Price</h2>
+                </a>
 
-<ul>
+            </li>
 
-<li>Under $30</li>
+        </ul>
 
-<li>$30 - $60</li>
+        <!-- User details and logout -->
 
-<li>$60+</li>
+        <div class="nav-right">
 
-</ul>
+            <span class="username">
 
-</aside>
+                Welcome, {{ username }}
 
-<!-- Products -->
+            </span>
 
-<section class="products-grid">
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-btn"
+            >
 
-<!-- Card -->
+                Logout
 
-<div class="product-card">
+            </a>
 
-<img src="{{ url_for('static', filename='images/chocolate-cake.jpg') }}">
+        </div>
 
-<h3>Chocolate Dream</h3>
+    </nav>
 
-<p>
+    <!-- Flash messages -->
 
-Rich chocolate sponge layered with silky ganache.
+    {% with messages = get_flashed_messages() %}
 
-</p>
+        {% if messages %}
 
-<div class="price">
+            <div class="flash-message">
 
-$55
+                {{ messages[0] }}
 
-</div>
+            </div>
 
-<div class="buttons">
+        {% endif %}
 
-<button>View Details</button>
+    {% endwith %}
 
-<button class="cart">Add to Cart</button>
+    <!-- Page heading -->
 
-</div>
+    <section class="page-header">
 
-</div>
+        <p class="page-label">
 
-<!-- Card -->
+            Sweet Souls Bakery
 
-<div class="product-card">
+        </p>
 
-<img src="{{ url_for('static', filename='images/red-velvet.jpg') }}">
+        <h1>
 
-<h3>Red Velvet</h3>
+            Our Bakery Collection
 
-<p>
+        </h1>
 
-Classic red velvet with cream cheese frosting.
+        <p>
 
-</p>
+            Browse handcrafted cakes made fresh every day.
 
-<div class="price">
+        </p>
 
-$62
+    </section>
 
-</div>
+    <!-- Search and sorting -->
 
-<div class="buttons">
+    <section class="search-section">
 
-<button>View Details</button>
+        <input
+            type="text"
+            placeholder="Search cakes..."
+            aria-label="Search cakes"
+        >
 
-<button class="cart">Add to Cart</button>
+        <select aria-label="Sort products">
 
-</div>
+            <option value="">
 
-</div>
+                Sort By
 
-<!-- Card -->
+            </option>
 
-<div class="product-card">
+            <option value="price-low">
 
-<img src="{{ url_for('static', filename='images/lotus-cake.jpg') }}">
+                Price: Low to High
 
-<h3>Lotus Biscoff</h3>
+            </option>
 
-<p>
+            <option value="price-high">
 
-Lotus cream, caramel and crunchy biscuit layers.
+                Price: High to Low
 
-</p>
+            </option>
 
-<div class="price">
+            <option value="best-selling">
 
-$70
+                Best Selling
 
-</div>
+            </option>
 
-<div class="buttons">
+            <option value="newest">
 
-<button>View Details</button>
+                Newest
 
-<button class="cart">Add to Cart</button>
+            </option>
 
-</div>
+        </select>
 
-</div>
+    </section>
 
-<!-- Card -->
+    <!-- Main product area -->
 
-<div class="product-card">
+    <main class="products-container">
 
-<img src="{{ url_for('static', filename='images/strawberry-cake.jpg') }}">
+        <!-- Product filters -->
 
-<h3>Strawberry Delight</h3>
+        <aside class="sidebar">
 
-<p>
+            <div class="filter-group">
 
-Fresh strawberries with vanilla sponge.
+                <h2>
 
-</p>
+                    Categories
 
-<div class="price">
+                </h2>
 
-$58
+                <ul>
 
-</div>
+                    <li>
 
-<div class="buttons">
+                        <button type="button">
 
-<button>View Details</button>
+                            Birthday Cakes
 
-<button class="cart">Add to Cart</button>
+                        </button>
 
-</div>
+                    </li>
 
-</div>
+                    <li>
 
-<!-- Card -->
+                        <button type="button">
 
-<div class="product-card">
+                            Wedding Cakes
 
-<img src="{{ url_for('static', filename='images/oreo-cake.jpg') }}">
+                        </button>
 
-<h3>Oreo Explosion</h3>
+                    </li>
 
-<p>
+                    <li>
 
-Chocolate sponge loaded with Oreo pieces.
+                        <button type="button">
 
-</p>
+                            Cupcakes
 
-<div class="price">
+                        </button>
 
-$64
+                    </li>
 
-</div>
+                    <li>
 
-<div class="buttons">
+                        <button type="button">
 
-<button>View Details</button>
+                            Cookies
 
-<button class="cart">Add to Cart</button>
+                        </button>
 
-</div>
+                    </li>
 
-</div>
+                    <li>
 
-<!-- Card -->
+                        <button type="button">
 
-<div class="product-card">
+                            Brownies
 
-<img src="{{ url_for('static', filename='images/vanilla-cake.jpg') }}">
+                        </button>
 
-<h3>Vanilla Bliss</h3>
+                    </li>
 
-<p>
+                    <li>
 
-Classic vanilla buttercream celebration cake.
+                        <button type="button">
 
-</p>
+                            Cheesecakes
 
-<div class="price">
+                        </button>
 
-$48
+                    </li>
 
-</div>
+                </ul>
 
-<div class="buttons">
+            </div>
 
-<button>View Details</button>
+            <div class="filter-group">
 
-<button class="cart">Add to Cart</button>
+                <h2>
 
-</div>
+                    Price
 
-</div>
+                </h2>
 
-<!-- Card -->
+                <ul>
 
-<div class="product-card">
+                    <li>
 
-<img src="{{ url_for('static', filename='images/caramel-cake.jpg') }}">
+                        <button type="button">
 
-<h3>Salted Caramel</h3>
+                            Under $30
 
-<p>
+                        </button>
 
-Salted caramel buttercream with caramel drip.
+                    </li>
 
-</p>
+                    <li>
 
-<div class="price">
+                        <button type="button">
 
-$66
+                            $30–$60
 
-</div>
+                        </button>
 
-<div class="buttons">
+                    </li>
 
-<button>View Details</button>
+                    <li>
 
-<button class="cart">Add to Cart</button>
+                        <button type="button">
 
-</div>
+                            $60+
 
-</div>
+                        </button>
 
-<!-- Card -->
+                    </li>
 
-<div class="product-card">
+                </ul>
 
-<img src="{{ url_for('static', filename='images/rainbow-cake.jpg') }}">
+            </div>
 
-<h3>Rainbow Celebration</h3>
+        </aside>
 
-<p>
+        <!-- Products loaded from SQLite -->
 
-Bright rainbow sponge perfect for birthdays.
+        <section class="products-grid">
 
-</p>
+            {% if products %}
 
-<div class="price">
+                {% for product in products %}
 
-$72
+                    <article class="product-card">
 
-</div>
+                        <div class="product-image">
 
-<div class="buttons">
+                            <img
+                                src="{{ url_for('static', filename='images/' + product['image']) }}"
+                                alt="{{ product['name'] }}"
+                            >
 
-<button>View Details</button>
+                        </div>
 
-<button class="cart">Add to Cart</button>
+                        <div class="product-content">
 
-</div>
+                            <span class="product-category">
 
-</div>
+                                {{ product['category'] }}
 
-</section>
+                            </span>
 
-</div>
+                            <h2>
 
-<!-- Footer -->
+                                {{ product['name'] }}
 
-<footer>
+                            </h2>
 
-<p>
+                            <p>
 
-© 2026 Sweet Souls Bakery | BakeFlow
+                                {{ product['description'] }}
 
-</p>
+                            </p>
 
-</footer>
+                            <div class="product-bottom">
+
+                                <div class="price">
+
+                                    ${{ "%.2f"|format(product['price']) }}
+
+                                </div>
+
+                                <div class="buttons">
+
+                                    <a
+                                        href="{{ url_for('products') }}"
+                                        class="details-btn"
+                                    >
+
+                                        View Details
+
+                                    </a>
+
+                                    <a
+                                        href="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                                        class="cart-btn"
+                                    >
+
+                                        Add to Cart
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty-products">
+
+                    <h2>
+
+                        No products available
+
+                    </h2>
+
+                    <p>
+
+                        New Sweet Souls products will appear here soon.
+
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+
+            © 2026 Sweet Souls Bakery | BakeFlow
+
+        </p>
+
+    </footer>
 
 </body>
 

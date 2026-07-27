@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic page information -->
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BakeFlow | Shopping Cart</title>
+
+    <!-- Cart page stylesheet -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/cart.css') }}"
+    >
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+<body>
+
+    <!-- Navigation bar -->
+
+    <nav class="main-nav">
+
+        <!-- BakeFlow logo -->
+
+        <div class="logo">
+
+            <a href="{{ url_for('home') }}">
+
+                BakeFlow
+
+            </a>
+
+        </div>
+
+        <!-- Main navigation links -->
+
+        <ul class="nav-links">
+
+            <li>
+
+                <a href="{{ url_for('home') }}">
+
+                    Home
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="{{ url_for('products') }}">
+
+                    Products
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="{{ url_for('custom_cakes') }}">
+
+                    Custom Cakes
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="{{ url_for('smartbake') }}">
+
+                    SmartBake AI
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="{{ url_for('orders') }}">
+
+                    Orders
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="{{ url_for('contact') }}">
+
+                    Contact
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a
+                    class="active"
+                    href="{{ url_for('cart') }}"
+                >
+
+                    🛒 Cart
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <!-- User information and logout -->
+
+        <div class="nav-right">
+
+            <span class="username">
+
+                Welcome, {{ username }}
+
+            </span>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-btn"
+            >
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- Flash messages -->
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            <div class="flash-message">
+
+                {{ messages[0] }}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+    <!-- Page heading -->
+
+    <section class="page-header">
+
+        <p class="page-label">
+
+            Sweet Souls Bakery
+
+        </p>
+
+        <h1>
+
+            Shopping Cart
+
+        </h1>
+
+        <p>
+
+            Review your selected cakes before checkout.
+
+        </p>
+
+    </section>
+
+    <!-- Shopping cart content -->
+
+    <main class="cart-container">
+
+        {% if cart_items %}
+
+            <!-- Cart items table -->
+
+            <div class="cart-table-wrapper">
+
+                <table class="cart-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+
+                                Product
+
+                            </th>
+
+                            <th>
+
+                                Image
+
+                            </th>
+
+                            <th>
+
+                                Price
+
+                            </th>
+
+                            <th>
+
+                                Quantity
+
+                            </th>
+
+                            <th>
+
+                                Subtotal
+
+                            </th>
+
+                            <th>
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in cart_items %}
+
+                            <tr>
+
+                                <td class="product-name">
+
+                                    {{ item["name"] }}
+
+                                </td>
+
+                                <td>
+
+                                    <img
+                                        src="{{ url_for('static', filename='images/' + item['image']) }}"
+                                        alt="{{ item['name'] }}"
+                                    >
+
+                                </td>
+
+                                <td>
+
+                                    ${{ "%.2f"|format(item["price"]) }}
+
+                                </td>
+
+                                <td>
+
+                                    <span class="quantity">
+
+                                        {{ item["quantity"] }}
+
+                                    </span>
+
+                                </td>
+
+                                <td class="subtotal">
+
+                                    ${{ "%.2f"|format(item["item_total"]) }}
+
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="{{ url_for('remove_from_cart', cart_id=item['cart_id']) }}"
+                                        class="remove-btn"
+                                    >
+
+                                        Remove
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- Order summary -->
+
+            <aside class="summary">
+
+                <h2>
+
+                    Order Summary
+
+                </h2>
+
+                <div class="summary-row">
+
+                    <span>
+
+                        Items
+
+                    </span>
+
+                    <span>
+
+                        {{ cart_items|length }}
+
+                    </span>
+
+                </div>
+
+                <div class="summary-row total-row">
+
+                    <span>
+
+                        Total
+
+                    </span>
+
+                    <strong>
+
+                        ${{ "%.2f"|format(total) }}
+
+                    </strong>
+
+                </div>
+
+                <div class="summary-buttons">
+
+                    <a
+                        href="{{ url_for('products') }}"
+                        class="continue-btn"
+                    >
+
+                        Continue Shopping
+
+                    </a>
+
+                    <a
+                        href="#"
+                        class="checkout-btn"
+                    >
+
+                        Proceed to Checkout
+
+                    </a>
+
+                </div>
+
+            </aside>
+
+        {% else %}
+
+            <!-- Empty cart message -->
+
+            <section class="empty-cart">
+
+                <div class="empty-cart-icon">
+
+                    🛒
+
+                </div>
+
+                <h2>
+
+                    Your cart is empty
+
+                </h2>
+
+                <p>
+
+                    You have not added any cakes yet. Browse the collection and choose something delicious.
+
+                </p>
+
+                <a
+                    href="{{ url_for('products') }}"
+                    class="shop-btn"
+                >
+
+                    Browse Cakes
+
+                </a>
+
+            </section>
+
+        {% endif %}
+
+    </main>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+
+            © 2026 Sweet Souls Bakery | BakeFlow
+
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
