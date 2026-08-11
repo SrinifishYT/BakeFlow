@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic page information -->
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BakeFlow | My Orders</title>
+
+    <!-- Orders stylesheet -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/orders.css') }}"
+    >
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+<body>
+
+    <!-- Navigation bar -->
+
+    <nav class="main-nav">
+
+        <div class="logo">
+
+            <a href="{{ url_for('home') }}">
+
+                BakeFlow
+
+            </a>
+
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="{{ url_for('home') }}">Home</a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('products') }}">Products</a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('custom_cakes') }}">Custom Cakes</a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('smartbake') }}">SmartBake AI</a>
+            </li>
+
+            <li>
+                <a class="active" href="{{ url_for('orders') }}">Orders</a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('contact') }}">Contact</a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('cart') }}">🛒 Cart</a>
+            </li>
+
+        </ul>
+
+        <div class="nav-right">
+
+            <span class="username">
+
+                Welcome, {{ username }}
+
+            </span>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-btn"
+            >
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- Flash messages -->
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            <div class="flash-message">
+
+                {{ messages[0] }}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+    <!-- Page heading -->
+
+    <section class="page-header">
+
+        <p class="page-label">
+
+            Sweet Souls Bakery
+
+        </p>
+
+        <h1>
+
+            My Orders
+
+        </h1>
+
+        <p>
+
+            View your current orders, track their progress and review previous purchases.
+
+        </p>
+
+    </section>
+
+    <!-- Order statistics -->
+
+    <section class="order-stats">
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+
+                Total Orders
+
+            </span>
+
+            <strong>
+
+                {{ orders|length if orders else 0 }}
+
+            </strong>
+
+        </div>
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+
+                In Progress
+
+            </span>
+
+            <strong>
+
+                {{ active_orders if active_orders is defined else 0 }}
+
+            </strong>
+
+        </div>
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+
+                Completed
+
+            </span>
+
+            <strong>
+
+                {{ completed_orders if completed_orders is defined else 0 }}
+
+            </strong>
+
+        </div>
+
+    </section>
+
+    <!-- Orders section -->
+
+    <main class="orders-container">
+
+        {% if orders %}
+
+            {% for order in orders %}
+
+                <article class="order-card">
+
+                    <!-- Order heading -->
+
+                    <div class="order-top">
+
+                        <div>
+
+                            <p class="order-number">
+
+                                Order #{{ order["id"] }}
+
+                            </p>
+
+                            <p class="order-date">
+
+                                {{ order["order_date"] }}
+
+                            </p>
+
+                        </div>
+
+                        <span class="status status-{{ order['status']|lower|replace(' ', '-') }}">
+
+                            {{ order["status"] }}
+
+                        </span>
+
+                    </div>
+
+                    <!-- Order information -->
+
+                    <div class="order-details">
+
+                        <div class="detail">
+
+                            <span>
+
+                                Order Type
+
+                            </span>
+
+                            <strong>
+
+                                {{ order["order_type"] if order["order_type"] else "Standard Order" }}
+
+                            </strong>
+
+                        </div>
+
+                        <div class="detail">
+
+                            <span>
+
+                                Delivery Method
+
+                            </span>
+
+                            <strong>
+
+                                {{ order["delivery_method"] if order["delivery_method"] else "Pickup" }}
+
+                            </strong>
+
+                        </div>
+
+                        <div class="detail">
+
+                            <span>
+
+                                Total
+
+                            </span>
+
+                            <strong class="order-price">
+
+                                ${{ "%.2f"|format(order["total"]) }}
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Progress tracker -->
+
+                    <div class="tracking-section">
+
+                        <h3>
+
+                            Order Progress
+
+                        </h3>
+
+                        <div class="progress-track">
+
+                            <div class="progress-step completed">
+
+                                <div class="circle">
+
+                                    ✓
+
+                                </div>
+
+                                <span>
+
+                                    Order Placed
+
+                                </span>
+
+                            </div>
+
+                            <div class="progress-line"></div>
+
+                            <div class="progress-step {% if order['status'] in ['Baking', 'Ready', 'Completed'] %}completed{% endif %}">
+
+                                <div class="circle">
+
+                                    2
+
+                                </div>
+
+                                <span>
+
+                                    Baking
+
+                                </span>
+
+                            </div>
+
+                            <div class="progress-line"></div>
+
+                            <div class="progress-step {% if order['status'] in ['Ready', 'Completed'] %}completed{% endif %}">
+
+                                <div class="circle">
+
+                                    3
+
+                                </div>
+
+                                <span>
+
+                                    Ready
+
+                                </span>
+
+                            </div>
+
+                            <div class="progress-line"></div>
+
+                            <div class="progress-step {% if order['status'] == 'Completed' %}completed{% endif %}">
+
+                                <div class="circle">
+
+                                    4
+
+                                </div>
+
+                                <span>
+
+                                    Completed
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Action buttons -->
+
+                    <div class="order-actions">
+
+                        <a href="#" class="details-btn">
+
+                            View Order Details
+
+                        </a>
+
+                        <a href="{{ url_for('products') }}" class="reorder-btn">
+
+                            Order Again
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        {% else %}
+
+            <!-- Shown before the customer has placed an order -->
+
+            <section class="empty-orders">
+
+                <div class="empty-icon">
+
+                    📦
+
+                </div>
+
+                <h2>
+
+                    No orders yet
+
+                </h2>
+
+                <p>
+
+                    Your Sweet Souls orders will appear here once you complete checkout.
+
+                </p>
+
+                <a
+                    href="{{ url_for('products') }}"
+                    class="browse-btn"
+                >
+
+                    Browse Cakes
+
+                </a>
+
+            </section>
+
+        {% endif %}
+
+    </main>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+
+            © 2026 Sweet Souls Bakery | BakeFlow
+
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
