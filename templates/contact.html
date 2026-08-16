@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}BakeFlow | Contact{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="page-label">Sweet Souls Bakery</p>
+    <h1>Contact Us</h1>
+    <p>Send the bakery a question about an order, custom cake, ingredients or anything else.</p>
+</section>
+
+<main class="contact-layout">
+    <section class="contact-info">
+        <div class="info-badge">SS</div>
+        <h2>We’re here to help</h2>
+        <p>Use the form and your message will be saved in BakeFlow for the Sweet Souls administrator to review.</p>
+
+        <div class="info-list">
+            <div><span>Orders</span><strong>Questions about existing or upcoming orders</strong></div>
+            <div><span>Custom Cakes</span><strong>Design ideas, flavours, themes and event dates</strong></div>
+            <div><span>Dietary Needs</span><strong>Ask the bakery directly about ingredients and preparation</strong></div>
+        </div>
+
+        <a href="{{ url_for('smartbake') }}" class="ai-link">Need a quick cake idea? Ask SmartBake AI →</a>
+    </section>
+
+    <section class="contact-card">
+        <h2>Send a Message</h2>
+        <form action="{{ url_for('contact') }}" method="POST">
+            <div class="field-grid two">
+                <label>
+                    Name
+                    <input type="text" name="name" value="{{ user['first_name'] }} {{ user['last_name'] }}" required>
+                </label>
+                <label>
+                    Email
+                    <input type="email" name="email" value="{{ user['email'] }}" required>
+                </label>
+            </div>
+
+            <label>
+                Subject
+                <select name="subject" required>
+                    <option value="Order Question">Order Question</option>
+                    <option value="Custom Cake Enquiry">Custom Cake Enquiry</option>
+                    <option value="Dietary / Ingredient Question">Dietary / Ingredient Question</option>
+                    <option value="Delivery / Pickup">Delivery / Pickup</option>
+                    <option value="General Enquiry">General Enquiry</option>
+                </select>
+            </label>
+
+            <label>
+                Message
+                <textarea name="message" rows="8" maxlength="1500" placeholder="Tell Sweet Souls Bakery how we can help..." required></textarea>
+            </label>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+</main>
+{% endblock %}

@@ -1,432 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <!-- Basic page information -->
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>BakeFlow | Shopping Cart</title>
-
-    <!-- Cart page stylesheet -->
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/cart.css') }}"
-    >
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-</head>
-
-<body>
-
-    <!-- Navigation bar -->
-
-    <nav class="main-nav">
-
-        <!-- BakeFlow logo -->
-
-        <div class="logo">
-
-            <a href="{{ url_for('home') }}">
-
-                BakeFlow
-
-            </a>
-
-        </div>
-
-        <!-- Main navigation links -->
-
-        <ul class="nav-links">
-
-            <li>
-
-                <a href="{{ url_for('home') }}">
-
-                    Home
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('products') }}">
-
-                    Products
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('custom_cakes') }}">
-
-                    Custom Cakes
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('smartbake') }}">
-
-                    SmartBake AI
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('orders') }}">
-
-                    Orders
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('contact') }}">
-
-                    Contact
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a
-                    class="active"
-                    href="{{ url_for('cart') }}"
-                >
-
-                    🛒 Cart
-
-                </a>
-
-            </li>
-
-        </ul>
-
-        <!-- User information and logout -->
-
-        <div class="nav-right">
-
-            <span class="username">
-
-                Welcome, {{ username }}
-
-            </span>
-
-            <a
-                href="{{ url_for('logout') }}"
-                class="logout-btn"
-            >
-
-                Logout
-
-            </a>
-
-        </div>
-
-    </nav>
-
-    <!-- Flash messages -->
-
-    {% with messages = get_flashed_messages() %}
-
-        {% if messages %}
-
-            <div class="flash-message">
-
-                {{ messages[0] }}
-
-            </div>
-
-        {% endif %}
-
-    {% endwith %}
-
-    <!-- Page heading -->
-
-    <section class="page-header">
-
-        <p class="page-label">
-
-            Sweet Souls Bakery
-
-        </p>
-
-        <h1>
-
-            Shopping Cart
-
-        </h1>
-
-        <p>
-
-            Review your selected cakes before checkout.
-
-        </p>
-
-    </section>
-
-    <!-- Shopping cart content -->
-
-    <main class="cart-container">
-
+{% extends "base.html" %}
+
+{% block title %}BakeFlow | Shopping Cart{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="page-label">Sweet Souls Bakery</p>
+    <h1>Shopping Cart</h1>
+    <p>Review your selected cakes before checkout.</p>
+</section>
+
+<main class="cart-container">
+    {% if cart_items or custom_items %}
+    <div class="cart-main">
         {% if cart_items %}
-
-            <!-- Cart items table -->
-
-            <div class="cart-table-wrapper">
-
-                <table class="cart-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-
-                                Product
-
-                            </th>
-
-                            <th>
-
-                                Image
-
-                            </th>
-
-                            <th>
-
-                                Price
-
-                            </th>
-
-                            <th>
-
-                                Quantity
-
-                            </th>
-
-                            <th>
-
-                                Subtotal
-
-                            </th>
-
-                            <th>
-
-                                Action
-
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {% for item in cart_items %}
-
-                            <tr>
-
-                                <td class="product-name">
-
-                                    {{ item["name"] }}
-
-                                </td>
-
-                                <td>
-
-                                    <img
-                                        src="{{ url_for('static', filename='images/' + item['image']) }}"
-                                        alt="{{ item['name'] }}"
-                                    >
-
-                                </td>
-
-                                <td>
-
-                                    ${{ "%.2f"|format(item["price"]) }}
-
-                                </td>
-
-                                <td>
-
-                                    <span class="quantity">
-
-                                        {{ item["quantity"] }}
-
-                                    </span>
-
-                                </td>
-
-                                <td class="subtotal">
-
-                                    ${{ "%.2f"|format(item["item_total"]) }}
-
-                                </td>
-
-                                <td>
-
-                                    <a
-                                        href="{{ url_for('remove_from_cart', cart_id=item['cart_id']) }}"
-                                        class="remove-btn"
-                                    >
-
-                                        Remove
-
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-            <!-- Order summary -->
-
-            <aside class="summary">
-
-                <h2>
-
-                    Order Summary
-
-                </h2>
-
-                <div class="summary-row">
-
-                    <span>
-
-                        Items
-
-                    </span>
-
-                    <span>
-
-                        {{ cart_items|length }}
-
-                    </span>
-
+        <section class="cart-section">
+            <div class="section-title"><h2>Bakery Cakes</h2><span>{{ cart_items|length }} item types</span></div>
+            {% for item in cart_items %}
+            <article class="cart-item">
+                <img src="{{ url_for('static', filename='images/' + item['image']) }}" alt="{{ item['name'] }}">
+                <div class="item-info">
+                    <span class="item-type">{{ item['category'] }}</span>
+                    <h3>{{ item['name'] }}</h3>
+                    <p>${{ "%.2f"|format(item['price']) }} each</p>
                 </div>
 
-                <div class="summary-row total-row">
-
-                    <span>
-
-                        Total
-
-                    </span>
-
-                    <strong>
-
-                        ${{ "%.2f"|format(total) }}
-
-                    </strong>
-
+                <div class="quantity-controls">
+                    <form action="{{ url_for('update_cart', cart_id=item['cart_id']) }}" method="POST">
+                        <input type="hidden" name="action" value="decrease">
+                        <button type="submit" aria-label="Decrease quantity">−</button>
+                    </form>
+                    <span>{{ item['quantity'] }}</span>
+                    <form action="{{ url_for('update_cart', cart_id=item['cart_id']) }}" method="POST">
+                        <input type="hidden" name="action" value="increase">
+                        <button type="submit" aria-label="Increase quantity" {% if item['quantity'] >= item['stock'] %}disabled{% endif %}>+</button>
+                    </form>
                 </div>
 
-                <div class="summary-buttons">
+                <div class="item-total">${{ "%.2f"|format(item['item_total']) }}</div>
 
-                    <a
-                        href="{{ url_for('products') }}"
-                        class="continue-btn"
-                    >
-
-                        Continue Shopping
-
-                    </a>
-
-                    <a
-                        href="#"
-                        class="checkout-btn"
-                    >
-
-                        Proceed to Checkout
-
-                    </a>
-
-                </div>
-
-            </aside>
-
-        {% else %}
-
-            <!-- Empty cart message -->
-
-            <section class="empty-cart">
-
-                <div class="empty-cart-icon">
-
-                    🛒
-
-                </div>
-
-                <h2>
-
-                    Your cart is empty
-
-                </h2>
-
-                <p>
-
-                    You have not added any cakes yet. Browse the collection and choose something delicious.
-
-                </p>
-
-                <a
-                    href="{{ url_for('products') }}"
-                    class="shop-btn"
-                >
-
-                    Browse Cakes
-
-                </a>
-
-            </section>
-
+                <form action="{{ url_for('remove_from_cart', cart_id=item['cart_id']) }}" method="POST">
+                    <button class="remove-btn" type="submit">Remove</button>
+                </form>
+            </article>
+            {% endfor %}
+        </section>
         {% endif %}
 
-    </main>
+        {% if custom_items %}
+        <section class="cart-section custom-section">
+            <div class="section-title"><h2>Custom Cakes</h2><span>{{ custom_items|length }} designs</span></div>
+            {% for item in custom_items %}
+            <article class="cart-item custom-item">
+                <div class="custom-preview" style="--cake-colour: {{ item['colour'] }};">
+                    <div class="cake-layer"></div>
+                    <span>{{ item['shape'] }}</span>
+                </div>
 
-    <!-- Footer -->
+                <div class="item-info">
+                    <span class="item-type">Custom {{ item['size'] }}</span>
+                    <h3>{{ item['flavour'] }} {{ item['shape'] }} Cake</h3>
+                    <p>{{ item['filling'] }} · {{ item['frosting'] }}</p>
+                    <small>{{ item['decorations'] or 'No decorations' }}{% if item['cake_message'] %} · “{{ item['cake_message'] }}”{% endif %}</small>
+                </div>
 
-    <footer>
+                <div class="quantity-controls">
+                    <form action="{{ url_for('update_custom_cart', cart_id=item['cart_id']) }}" method="POST">
+                        <input type="hidden" name="action" value="decrease">
+                        <button type="submit">−</button>
+                    </form>
+                    <span>{{ item['quantity'] }}</span>
+                    <form action="{{ url_for('update_custom_cart', cart_id=item['cart_id']) }}" method="POST">
+                        <input type="hidden" name="action" value="increase">
+                        <button type="submit">+</button>
+                    </form>
+                </div>
 
-        <p>
+                <div class="item-total">${{ "%.2f"|format(item['item_total']) }}</div>
 
-            © 2026 Sweet Souls Bakery | BakeFlow
+                <form action="{{ url_for('remove_custom_from_cart', cart_id=item['cart_id']) }}" method="POST">
+                    <button class="remove-btn" type="submit">Remove</button>
+                </form>
+            </article>
+            {% endfor %}
+        </section>
+        {% endif %}
+    </div>
 
-        </p>
+    <aside class="summary">
+        <h2>Order Summary</h2>
+        <div class="summary-row"><span>Subtotal</span><strong>${{ "%.2f"|format(total) }}</strong></div>
+        <div class="summary-note">Pickup is free. Delivery is calculated at checkout.</div>
+        <a href="{{ url_for('checkout') }}" class="checkout-btn">Proceed to Checkout</a>
+        <a href="{{ url_for('products') }}" class="continue-btn">Continue Shopping</a>
+    </aside>
 
-    </footer>
-
-</body>
-
-</html>
+    {% else %}
+    <section class="empty-cart">
+        <div class="empty-icon">♡</div>
+        <h2>Your cart is empty</h2>
+        <p>Browse the Sweet Souls collection or create a custom cake to get started.</p>
+        <div class="empty-actions">
+            <a href="{{ url_for('products') }}" class="shop-btn">Browse Cakes</a>
+            <a href="{{ url_for('custom_cakes') }}" class="custom-btn">Build a Custom Cake</a>
+        </div>
+    </section>
+    {% endif %}
+</main>
+{% endblock %}

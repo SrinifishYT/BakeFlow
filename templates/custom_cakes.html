@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}BakeFlow | Custom Cakes{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom_cakes.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="page-label">Build Your Celebration</p>
+    <h1>Custom Cake Builder</h1>
+    <p>Choose every detail and see your estimated price update as you design.</p>
+</section>
+
+<main class="builder-layout">
+    <section class="builder-card">
+        <form id="customCakeForm" action="{{ url_for('custom_cakes') }}" method="POST">
+            <div class="form-section">
+                <div class="section-number">1</div>
+                <div class="section-content">
+                    <h2>Size and shape</h2>
+                    <div class="field-grid two">
+                        <label>
+                            Cake Size
+                            <select name="size" id="size" required>
+                                {% for name, extra in pricing.sizes.items() %}
+                                <option value="{{ name }}" data-price="{{ extra }}">{{ name }} — serves about {{ {'6 inch':'10–12','8 inch':'18–22','10 inch':'28–32'}[name] }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+
+                        <label>
+                            Shape
+                            <select name="shape" id="shape" required>
+                                {% for name, extra in pricing.shapes.items() %}
+                                <option value="{{ name }}" data-price="{{ extra }}">{{ name }}{% if extra %} (+${{ "%.0f"|format(extra) }}){% endif %}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-number">2</div>
+                <div class="section-content">
+                    <h2>Flavour and filling</h2>
+                    <div class="field-grid two">
+                        <label>
+                            Cake Flavour
+                            <select name="flavour" id="flavour" required>
+                                {% for name, extra in pricing.flavours.items() %}
+                                <option value="{{ name }}" data-price="{{ extra }}">{{ name }}{% if extra %} (+${{ "%.0f"|format(extra) }}){% endif %}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+
+                        <label>
+                            Filling
+                            <select name="filling" id="filling" required>
+                                {% for name, extra in pricing.fillings.items() %}
+                                <option value="{{ name }}" data-price="{{ extra }}">{{ name }}{% if extra %} (+${{ "%.0f"|format(extra) }}){% endif %}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-number">3</div>
+                <div class="section-content">
+                    <h2>Finish and colour</h2>
+                    <div class="field-grid three">
+                        <label>
+                            Frosting
+                            <select name="frosting" id="frosting" required>
+                                {% for name, extra in pricing.frostings.items() %}
+                                <option value="{{ name }}" data-price="{{ extra }}">{{ name }}{% if extra %} (+${{ "%.0f"|format(extra) }}){% endif %}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+
+                        <label>
+                            Dietary Option
+                            <select name="dietary" id="dietary" required>
+                                {% for name, extra in pricing.dietary.items() %}
+                                <option value="{{ name }}" data-price="{{ extra }}">{{ name }}{% if extra %} (+${{ "%.0f"|format(extra) }}){% endif %}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+
+                        <label>
+                            Main Colour
+                            <input type="color" name="colour" id="colour" value="#D7A98C">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-number">4</div>
+                <div class="section-content">
+                    <h2>Decorations</h2>
+                    <div class="decoration-grid">
+                        {% for name, extra in pricing.decorations.items() %}
+                        <label class="check-option">
+                            <input type="checkbox" name="decorations" value="{{ name }}" data-price="{{ extra }}">
+                            <span>
+                                <strong>{{ name }}</strong>
+                                <small>+${{ "%.0f"|format(extra) }}</small>
+                            </span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-number">5</div>
+                <div class="section-content">
+                    <h2>Final details</h2>
+                    <div class="field-grid two">
+                        <label>
+                            Event Date
+                            <input type="date" name="event_date" min="{{ today }}">
+                        </label>
+
+                        <label>
+                            Cake Message
+                            <input type="text" name="cake_message" maxlength="80" placeholder="e.g. Happy 18th Sarah!">
+                        </label>
+                    </div>
+
+                    <label class="full-field">
+                        Design Notes
+                        <textarea name="notes" rows="4" maxlength="800" placeholder="Describe your theme, style, colours or anything else the bakery should know."></textarea>
+                    </label>
+                </div>
+            </div>
+
+            <div class="builder-actions">
+                <button type="submit" name="action" value="save" class="save-btn">Save Design</button>
+                <button type="submit" name="action" value="add" class="add-btn">Add Custom Cake to Cart</button>
+            </div>
+        </form>
+    </section>
+
+    <aside class="preview-card">
+        <span class="preview-label">Live Preview</span>
+        <div class="cake-preview" id="cakePreview">
+            <div class="top-decoration">✦</div>
+            <div class="preview-layer top"></div>
+            <div class="preview-layer bottom"></div>
+            <div class="preview-message" id="previewMessage">Your Cake</div>
+        </div>
+
+        <div class="preview-summary">
+            <h2 id="previewTitle">Vanilla Round Cake</h2>
+            <p id="previewDescription">6 inch · Vanilla Buttercream · Buttercream</p>
+            <div class="price-row">
+                <span>Estimated Price</span>
+                <strong id="estimatedPrice">$65.00</strong>
+            </div>
+            <small>Final pricing may change if Sweet Souls Bakery confirms extra design work.</small>
+        </div>
+    </aside>
+</main>
+
+{% if saved_designs %}
+<section class="saved-section">
+    <div class="saved-heading">
+        <div>
+            <p>Saved Designs</p>
+            <h2>Your Recent Custom Cakes</h2>
+        </div>
+    </div>
+
+    <div class="saved-grid">
+        {% for cake in saved_designs %}
+        <article class="saved-card">
+            <div class="saved-colour" style="--saved-colour: {{ cake['colour'] }};"></div>
+            <span>{{ cake['size'] }} · {{ cake['shape'] }}</span>
+            <h3>{{ cake['flavour'] }} Cake</h3>
+            <p>{{ cake['filling'] }} · {{ cake['frosting'] }}</p>
+            <small>{{ cake['decorations'] or 'No decorations' }}</small>
+            <div class="saved-bottom">
+                <strong>${{ "%.2f"|format(cake['estimated_price']) }}</strong>
+                <form action="{{ url_for('add_saved_custom_cake', custom_cake_id=cake['id']) }}" method="POST">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/custom_cakes.js') }}"></script>
+{% endblock %}

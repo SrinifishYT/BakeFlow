@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}BakeFlow | SmartBake AI{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/smartbake.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="page-label">BakeFlow Assistant</p>
+    <h1>SmartBake AI</h1>
+    <p>Tell SmartBake about your event, budget, flavours or dietary needs and get a personalised cake suggestion.</p>
+</section>
+
+<main class="smart-layout">
+    <aside class="smart-info">
+        <div class="ai-mark">SB</div>
+        <h2>Your bakery assistant</h2>
+        <p>SmartBake can recommend cakes from the current Sweet Souls range or help you plan a custom cake.</p>
+
+        <div class="suggestion-list">
+            <button type="button" class="prompt-chip">I need a birthday cake under $85</button>
+            <button type="button" class="prompt-chip">What would you recommend for 20 people?</button>
+            <button type="button" class="prompt-chip">Help me design a chocolate custom cake</button>
+            <button type="button" class="prompt-chip">Which cake suits my saved preferences?</button>
+        </div>
+
+        <div class="ai-note">
+            <strong>Allergy note</strong>
+            <p>SmartBake can discuss dietary preferences, but allergy and cross-contamination information must be confirmed directly with Sweet Souls Bakery.</p>
+        </div>
+    </aside>
+
+    <section class="chat-card">
+        <div class="chat-top">
+            <div>
+                <span class="online-dot"></span>
+                <strong>SmartBake</strong>
+                <small>{% if ai_configured %}AI connected{% else %}API setup required{% endif %}</small>
+            </div>
+            <form action="{{ url_for('clear_smartbake') }}" method="POST">
+                <button type="submit" class="clear-chat">Clear chat</button>
+            </form>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            {% if not history %}
+            <div class="message assistant-message">
+                <div class="message-name">SmartBake</div>
+                <p>Hi {{ username }}! Tell me what you are celebrating and what kind of cake you have in mind. I can recommend a Sweet Souls cake or help plan a custom one.</p>
+            </div>
+            {% endif %}
+
+            {% for row in history %}
+            <div class="message {% if row['role'] == 'user' %}user-message{% else %}assistant-message{% endif %}">
+                <div class="message-name">{% if row['role'] == 'user' %}You{% else %}SmartBake{% endif %}</div>
+                <p>{{ row['content'] }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if not ai_configured %}
+        <div class="api-warning">
+            SmartBake is built, but an OpenAI API key has not been added yet. Put your key in the project <code>.env</code> file as <code>OPENAI_API_KEY=...</code> and restart Flask.
+        </div>
+        {% endif %}
+
+        <form class="chat-form" id="smartBakeForm">
+            <textarea id="smartBakeInput" maxlength="1200" rows="2" placeholder="Ask SmartBake about cakes, flavours, sizes or your event..." required></textarea>
+            <button type="submit" id="sendButton">Send</button>
+        </form>
+    </section>
+</main>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/smartbake.js') }}"></script>
+{% endblock %}

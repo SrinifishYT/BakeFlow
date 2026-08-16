@@ -1,220 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
+{% block title %}BakeFlow | Home{% endblock %}
 
-    <!-- Basic page information -->
-    <meta charset="UTF-8">
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <p class="hero-label">Sweet Souls Bakery</p>
+        <h1>Freshly Baked Happiness</h1>
+        <p class="hero-description">
+            Premium cakes handcrafted for every celebration. Browse our collection,
+            build a custom cake or ask SmartBake AI for a recommendation.
+        </p>
 
-    <title>BakeFlow | Home</title>
-
-    <!-- Home page stylesheet -->
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/home.css') }}"
-    >
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-</head>
-
-<body>
-
-    <!-- Navigation bar -->
-
-    <nav class="main-nav">
-
-        <!-- BakeFlow logo -->
-
-        <div class="logo">
-
-            <a href="{{ url_for('home') }}">
-
-                BakeFlow
-
-            </a>
-
+        <div class="buttons">
+            <a href="{{ url_for('products') }}" class="primary-btn">Browse Cakes</a>
+            <a href="{{ url_for('custom_cakes') }}" class="secondary-btn">Design Your Cake</a>
         </div>
+    </div>
+</section>
 
-        <!-- Main navigation links -->
+{% if featured_products %}
+<section class="featured-section">
+    <div class="section-heading">
+        <p>Fresh favourites</p>
+        <h2>Popular Sweet Souls Cakes</h2>
+    </div>
 
-        <ul class="nav-links">
-
-            <li>
-
-                <a
-                    class="active"
-                    href="{{ url_for('home') }}"
-                >
-
-                    Home
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('products') }}">
-
-                    Products
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('custom_cakes') }}">
-
-                    Custom Cakes
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('smartbake') }}">
-
-                    SmartBake AI
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('orders') }}">
-
-                    Orders
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('contact') }}">
-
-                    Contact
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('cart') }}">
-
-                    🛒 Cart
-
-                </a>
-
-            </li>
-
-        </ul>
-
-        <!-- User details and logout -->
-
-        <div class="nav-right">
-
-            <span class="username">
-
-                Welcome, {{ username }}
-
-            </span>
-
-            <a
-                href="{{ url_for('logout') }}"
-                class="logout-btn"
-            >
-
-                Logout
-
-            </a>
-
-        </div>
-
-    </nav>
-
-    <!-- Flash messages -->
-
-    {% with messages = get_flashed_messages() %}
-
-        {% if messages %}
-
-            <div class="flash-message">
-
-                {{ messages[0] }}
-
+    <div class="featured-grid">
+        {% for product in featured_products %}
+        <article class="featured-card">
+            <img src="{{ url_for('static', filename='images/' + product['image']) }}" alt="{{ product['name'] }}">
+            <div>
+                <span>{{ product['category'] }}</span>
+                <h3>{{ product['name'] }}</h3>
+                <p>{{ product['description'] }}</p>
+                <div class="featured-bottom">
+                    <strong>${{ "%.2f"|format(product['price']) }}</strong>
+                    <a href="{{ url_for('product_details', product_id=product['id']) }}">View Cake</a>
+                </div>
             </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
 
-        {% endif %}
+<section class="quick-links">
+    <a href="{{ url_for('custom_cakes') }}" class="quick-card">
+        <span>01</span>
+        <h3>Custom Cake Builder</h3>
+        <p>Choose the flavour, size, shape, frosting, colour, decorations and message.</p>
+    </a>
 
-    {% endwith %}
+    <a href="{{ url_for('smartbake') }}" class="quick-card">
+        <span>02</span>
+        <h3>SmartBake AI</h3>
+        <p>Get cake recommendations based on your event, budget and preferences.</p>
+    </a>
 
-    <!-- Hero section -->
-
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <p class="hero-label">
-
-                Sweet Souls Bakery
-
-            </p>
-
-            <h1>
-
-                Freshly Baked Happiness
-
-            </h1>
-
-            <p class="hero-description">
-
-                Premium cakes handcrafted for every celebration.
-                Browse our collection or design your own masterpiece.
-
-            </p>
-
-            <div class="buttons">
-
-                <a
-                    href="{{ url_for('products') }}"
-                    class="primary-btn"
-                >
-
-                    Browse Cakes
-
-                </a>
-
-                <a
-                    href="{{ url_for('custom_cakes') }}"
-                    class="secondary-btn"
-                >
-
-                    Design Your Cake
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-</body>
-
-</html>
+    <a href="{{ url_for('orders') }}" class="quick-card">
+        <span>03</span>
+        <h3>Track Orders</h3>
+        <p>Check whether your order has been placed, is baking, ready or completed.</p>
+    </a>
+</section>
+{% endblock %}

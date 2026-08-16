@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}BakeFlow | Order #{{ order['id'] }}{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/order_details.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="order-page">
+    <a href="{{ url_for('orders') }}" class="back-link">← Back to My Orders</a>
+
+    <section class="order-heading">
+        <div>
+            <p>Sweet Souls Bakery</p>
+            <h1>Order #{{ order['id'] }}</h1>
+            <span>Placed {{ order['order_date'][:10] }}</span>
+        </div>
+        <span class="order-status">{{ order['status'] }}</span>
+    </section>
+
+    <div class="order-layout">
+        <section class="order-items-card">
+            <h2>Order Items</h2>
+
+            {% for item in product_items %}
+            <article class="order-item">
+                {% if item['image'] %}
+                <img src="{{ url_for('static', filename='images/' + item['image']) }}" alt="{{ item['product_name'] }}">
+                {% endif %}
+                <div>
+                    <span>Bakery Cake</span>
+                    <h3>{{ item['product_name'] or 'Cake' }}</h3>
+                    <p>Quantity {{ item['quantity'] }} · ${{ "%.2f"|format(item['price']) }} each</p>
+                </div>
+                <strong>${{ "%.2f"|format(item['price'] * item['quantity']) }}</strong>
+            </article>
+            {% endfor %}
+
+            {% for item in custom_items %}
+            <article class="order-item custom-order-item">
+                <div class="custom-swatch" style="--swatch: {{ item['colour'] }}"></div>
+                <div>
+                    <span>Custom Cake</span>
+                    <h3>{{ item['flavour'] }} {{ item['shape'] }} Cake</h3>
+                    <p>{{ item['size'] }} · {{ item['filling'] }} · {{ item['frosting'] }}</p>
+                    <small>{{ item['decorations'] or 'No decorations' }}{% if item['cake_message'] %} · “{{ item['cake_message'] }}”{% endif %}</small>
+                </div>
+                <strong>${{ "%.2f"|format(item['price'] * item['quantity']) }}</strong>
+            </article>
+            {% endfor %}
+
+            <div class="totals">
+                <div><span>Delivery</span><strong>${{ "%.2f"|format(order['delivery_fee'] or 0) }}</strong></div>
+                <div class="total"><span>Order Total</span><strong>${{ "%.2f"|format(order['total']) }}</strong></div>
+            </div>
+        </section>
+
+        <aside class="order-info-card">
+            <h2>Order Information</h2>
+            <div class="info-row"><span>Status</span><strong>{{ order['status'] }}</strong></div>
+            <div class="info-row"><span>Order Type</span><strong>{{ order['order_type'] }}</strong></div>
+            <div class="info-row"><span>Method</span><strong>{{ order['delivery_method'] }}</strong></div>
+            <div class="info-row"><span>Requested Date</span><strong>{{ order['requested_date'] or 'Not specified' }}</strong></div>
+            <div class="info-row"><span>Payment</span><strong>{{ order['payment_method'] or 'Pay on pickup/delivery' }}</strong></div>
+
+            <h3>Customer</h3>
+            <p>{{ order['customer_name'] or username }}</p>
+            <p>{{ order['phone'] or '' }}</p>
+
+            {% if order['delivery_method'] == 'Delivery' %}
+            <h3>Delivery Address</h3>
+            <p>{{ order['street'] }}</p>
+            <p>{{ order['suburb'] }}, {{ order['state'] }} {{ order['postcode'] }}</p>
+            {% endif %}
+
+            {% if order['notes'] %}
+            <h3>Notes</h3>
+            <p>{{ order['notes'] }}</p>
+            {% endif %}
+        </aside>
+    </div>
+</main>
+{% endblock %}

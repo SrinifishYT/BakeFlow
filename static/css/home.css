@@ -1,428 +1,70 @@
-/* ==========================================
-   Reset
-========================================== */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-/* ==========================================
-   Whole Page
-========================================== */
-
-body{
-    font-family:'DM Sans',sans-serif;
-    background:#FFF8F3;
-    color:#333;
-}
-
-/* ==========================================
-   Navigation Bar
-========================================== */
-
-.main-nav{
-    width:100%;
-    min-height:82px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:28px;
-
-    padding:14px 48px;
-
-    background:#ffffff;
-
-    box-shadow:0 4px 18px rgba(0,0,0,.08);
-
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-/* Logo */
-
-.logo{
-    flex-shrink:0;
-}
-
-.logo a{
-    font-family:'Outfit',sans-serif;
-    font-size:32px;
-    font-weight:800;
-
-    color:#5C4033;
-
-    text-decoration:none;
-    white-space:nowrap;
-}
-
-/* Navigation links */
-
-.nav-links{
-    flex:1;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-wrap:wrap;
-
-    gap:8px 20px;
-
-    list-style:none;
-}
-
-.nav-links li{
-    flex-shrink:0;
-}
-
-.nav-links a{
-    display:block;
-
-    padding:9px 3px;
-
-    font-size:15px;
-    font-weight:600;
-
-    color:#444;
-
-    text-decoration:none;
-    white-space:nowrap;
-
-    transition:.25s;
-}
-
-.nav-links a:hover,
-.nav-links a.active{
-    color:#5C4033;
-}
-
-/* Right side of navbar */
-
-.nav-right{
-    display:flex;
-    align-items:center;
-    justify-content:flex-end;
-
-    gap:14px;
-
-    flex-shrink:0;
-}
-
-.username{
-    color:#666;
-
-    font-size:14px;
-    font-weight:600;
-
-    white-space:nowrap;
-}
-
-/* Logout button */
-
-.logout-btn{
-    display:inline-block;
-
-    padding:11px 22px;
-
-    border-radius:30px;
-
-    background:#5C4033;
-    color:#ffffff;
-
-    font-size:14px;
-    font-weight:700;
-
-    text-decoration:none;
-    white-space:nowrap;
-
-    transition:.25s;
-}
-
-.logout-btn:hover{
-    background:#7A5646;
-    transform:translateY(-2px);
-}
-
-/* ==========================================
-   Flash Message
-========================================== */
-
-.flash-message{
-    width:90%;
-    max-width:1100px;
-
-    margin:20px auto 0;
-    padding:14px 18px;
-
-    border-radius:10px;
-
-    background:#e8f7e8;
-    color:#2f6b35;
-
-    text-align:center;
-    font-weight:600;
-}
-
-/* ==========================================
-   Hero Section
-========================================== */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#FFF8F3;color:#333}
 
 .hero{
-    min-height:calc(100vh - 82px);
-
+    min-height:calc(100vh - 78px);
     display:flex;
-    justify-content:center;
     align-items:center;
-
+    justify-content:center;
+    padding:70px 28px;
     text-align:center;
-
-    padding:60px 30px;
-
     background:
-        linear-gradient(
-            rgba(255,248,243,.90),
-            rgba(255,248,243,.90)
-        ),
-        url("../images/hero.jpg");
-
+        linear-gradient(rgba(255,248,243,.88),rgba(255,248,243,.88)),
+        url('../images/hero.jpg');
     background-size:cover;
     background-position:center;
 }
 
-.hero-content{
-    max-width:850px;
+.hero-content{max-width:900px}
+.hero-label{margin-bottom:16px;color:#7A5646;font-size:14px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+.hero h1{font-family:'Outfit',sans-serif;font-size:72px;line-height:1.05;font-weight:800;color:#5C4033}
+.hero-description{max-width:760px;margin:28px auto 0;color:#666;font-size:20px;line-height:1.75}
+.buttons{margin-top:38px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.primary-btn,.secondary-btn{display:inline-block;padding:15px 32px;border:2px solid #5C4033;border-radius:40px;font-weight:700;text-decoration:none;transition:.25s}
+.primary-btn{background:#5C4033;color:#fff}
+.secondary-btn{background:#fff;color:#5C4033}
+.primary-btn:hover,.secondary-btn:hover{transform:translateY(-3px)}
+.primary-btn:hover{background:#7A5646;border-color:#7A5646}
+.secondary-btn:hover{background:#5C4033;color:#fff}
+
+.featured-section{width:min(92%,1220px);margin:80px auto 0}
+.section-heading{text-align:center;margin-bottom:34px}
+.section-heading p{color:#7A5646;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.section-heading h2{margin-top:8px;font-family:'Outfit',sans-serif;font-size:38px;color:#5C4033}
+.featured-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.featured-card{overflow:hidden;border-radius:22px;background:#fff;box-shadow:0 10px 28px rgba(0,0,0,.08);transition:.3s}
+.featured-card:hover{transform:translateY(-7px);box-shadow:0 18px 36px rgba(0,0,0,.12)}
+.featured-card img{width:100%;height:235px;object-fit:cover}
+.featured-card>div{padding:22px}
+.featured-card span{color:#9a6b57;font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+.featured-card h3{margin:7px 0 8px;font-family:'Outfit',sans-serif;font-size:23px;color:#5C4033}
+.featured-card p{min-height:52px;color:#6c6c6c;line-height:1.55}
+.featured-bottom{margin-top:20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.featured-bottom strong{font-size:22px;color:#5C4033}
+.featured-bottom a{padding:9px 14px;border-radius:10px;background:#F2E9E3;color:#5C4033;font-weight:700;text-decoration:none}
+
+.quick-links{width:min(92%,1220px);margin:70px auto 30px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.quick-card{display:block;padding:28px;border:1px solid #eee1d8;border-radius:20px;background:#fff;color:inherit;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.05);transition:.25s}
+.quick-card:hover{transform:translateY(-5px);border-color:#cbb2a3}
+.quick-card>span{display:inline-flex;width:38px;height:38px;align-items:center;justify-content:center;border-radius:50%;background:#5C4033;color:#fff;font-weight:800}
+.quick-card h3{margin:18px 0 8px;font-family:'Outfit',sans-serif;font-size:22px;color:#5C4033}
+.quick-card p{color:#6a6a6a;line-height:1.6}
+
+@media(max-width:950px){
+    .hero h1{font-size:56px}
+    .featured-grid,.quick-links{grid-template-columns:1fr}
+    .featured-card{display:grid;grid-template-columns:240px 1fr}
+    .featured-card img{height:100%;min-height:220px}
 }
 
-/* Small label above heading */
-
-.hero-label{
-    margin-bottom:18px;
-
-    font-size:15px;
-    font-weight:700;
-
-    letter-spacing:2px;
-    text-transform:uppercase;
-
-    color:#7A5646;
-}
-
-/* Main heading */
-
-.hero h1{
-    font-family:'Outfit',sans-serif;
-
-    font-size:72px;
-    font-weight:800;
-
-    color:#5E3023;
-
-    line-height:1.1;
-}
-
-/* Hero paragraph */
-
-.hero-description{
-    margin-top:30px;
-
-    font-size:21px;
-    line-height:1.8;
-
-    color:#666;
-}
-
-/* ==========================================
-   Hero Buttons
-========================================== */
-
-.buttons{
-    margin-top:45px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-wrap:wrap;
-
-    gap:20px;
-}
-
-.primary-btn,
-.secondary-btn{
-    display:inline-block;
-
-    padding:16px 36px;
-
-    border-radius:40px;
-
-    font-family:'DM Sans',sans-serif;
-    font-size:17px;
-    font-weight:700;
-
-    text-decoration:none;
-
-    transition:.3s;
-}
-
-/* Main button */
-
-.primary-btn{
-    background:#5C4033;
-    color:white;
-
-    box-shadow:0 10px 20px rgba(0,0,0,.08);
-}
-
-.primary-btn:hover{
-    background:#7A5646;
-    transform:translateY(-4px);
-}
-
-/* Secondary button */
-
-.secondary-btn{
-    background:white;
-    color:#5C4033;
-
-    border:2px solid #5C4033;
-}
-
-.secondary-btn:hover{
-    background:#5C4033;
-    color:white;
-
-    transform:translateY(-4px);
-}
-
-/* ==========================================
-   Tablet Navigation
-========================================== */
-
-@media(max-width:1150px){
-
-    .main-nav{
-        flex-wrap:wrap;
-        justify-content:center;
-
-        padding:16px 30px;
-    }
-
-    .logo{
-        order:1;
-    }
-
-    .nav-right{
-        order:2;
-
-        margin-left:auto;
-    }
-
-    .nav-links{
-        order:3;
-
-        width:100%;
-        flex-basis:100%;
-
-        padding-top:10px;
-
-        border-top:1px solid #eeeeee;
-    }
-
-    .hero h1{
-        font-size:56px;
-    }
-
-    .hero-description{
-        font-size:19px;
-    }
-}
-
-/* ==========================================
-   Mobile Navigation
-========================================== */
-
-@media(max-width:700px){
-
-    .main-nav{
-        flex-direction:column;
-
-        gap:14px;
-
-        padding:18px 20px;
-    }
-
-    .nav-right{
-        width:100%;
-
-        justify-content:center;
-        flex-wrap:wrap;
-
-        margin-left:0;
-    }
-
-    .nav-links{
-        width:100%;
-
-        gap:8px 14px;
-
-        padding-top:12px;
-    }
-
-    .nav-links a{
-        font-size:14px;
-    }
-
-    .username{
-        text-align:center;
-    }
-
-    .hero{
-        min-height:calc(100vh - 180px);
-
-        padding:45px 24px;
-    }
-
-    .hero h1{
-        font-size:44px;
-    }
-
-    .hero-description{
-        font-size:17px;
-    }
-
-    .buttons{
-        flex-direction:column;
-    }
-
-    .primary-btn,
-    .secondary-btn{
-        width:240px;
-    }
-}
-
-/* ==========================================
-   Small Phones
-========================================== */
-
-@media(max-width:450px){
-
-    .logo a{
-        font-size:28px;
-    }
-
-    .hero h1{
-        font-size:38px;
-    }
-
-    .hero-label{
-        font-size:13px;
-    }
-
+@media(max-width:650px){
+    .hero{min-height:650px;padding:55px 22px}
+    .hero h1{font-size:43px}
+    .hero-description{font-size:17px}
+    .buttons{flex-direction:column;align-items:center}
+    .primary-btn,.secondary-btn{width:240px}
+    .section-heading h2{font-size:31px}
+    .featured-card{display:block}
+    .featured-card img{height:220px}
 }

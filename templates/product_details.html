@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}BakeFlow | {{ product['name'] }}{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/product_details.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="product-page">
+    <a href="{{ url_for('products') }}" class="back-link">← Back to Products</a>
+
+    <section class="product-detail-card">
+        <div class="detail-image">
+            <img src="{{ url_for('static', filename='images/' + product['image']) }}" alt="{{ product['name'] }}">
+        </div>
+
+        <div class="detail-info">
+            <span class="category">{{ product['category'] }}</span>
+            <h1>{{ product['name'] }}</h1>
+            <p class="description">{{ product['description'] }}</p>
+            <div class="detail-price">${{ "%.2f"|format(product['price']) }}</div>
+
+            {% if product['stock'] > 5 %}
+                <p class="availability available">In stock · {{ product['stock'] }} available</p>
+            {% elif product['stock'] > 0 %}
+                <p class="availability low">Low stock · only {{ product['stock'] }} left</p>
+            {% else %}
+                <p class="availability sold">Currently sold out</p>
+            {% endif %}
+
+            <div class="product-notes">
+                <div><strong>Handcrafted</strong><span>Prepared by Sweet Souls Bakery</span></div>
+                <div><strong>Celebration ready</strong><span>Perfect for birthdays and special events</span></div>
+                <div><strong>Dietary needs?</strong><span>Use SmartBake or contact the bakery before ordering</span></div>
+            </div>
+
+            {% if product['stock'] > 0 %}
+            <form class="add-form" action="{{ url_for('add_to_cart', product_id=product['id']) }}" method="POST">
+                <input type="hidden" name="next" value="{{ url_for('product_details', product_id=product['id']) }}">
+                <label for="quantity">Quantity</label>
+                <input id="quantity" type="number" name="quantity" value="1" min="1" max="{{ product['stock'] }}">
+                <button type="submit">Add to Cart</button>
+            </form>
+            {% endif %}
+        </div>
+    </section>
+
+    {% if related %}
+    <section class="related-section">
+        <h2>You may also like</h2>
+        <div class="related-grid">
+            {% for item in related %}
+            <a href="{{ url_for('product_details', product_id=item['id']) }}" class="related-card">
+                <img src="{{ url_for('static', filename='images/' + item['image']) }}" alt="{{ item['name'] }}">
+                <div>
+                    <h3>{{ item['name'] }}</h3>
+                    <span>${{ "%.2f"|format(item['price']) }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</main>
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}BakeFlow | Checkout{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="page-label">Final Step</p>
+    <h1>Checkout</h1>
+    <p>Confirm your order details and choose pickup or delivery.</p>
+</section>
+
+<main class="checkout-layout">
+    <form class="checkout-form" action="{{ url_for('checkout') }}" method="POST" id="checkoutForm">
+        <section class="checkout-card">
+            <h2>Contact Details</h2>
+            <div class="form-grid two">
+                <label>
+                    Full Name
+                    <input type="text" name="customer_name" value="{{ user['first_name'] }} {{ user['last_name'] }}" required>
+                </label>
+                <label>
+                    Phone Number
+                    <input type="tel" name="phone" value="{{ user['phone'] }}" required>
+                </label>
+            </div>
+        </section>
+
+        <section class="checkout-card">
+            <h2>Order Method</h2>
+            <div class="method-grid">
+                <label class="method-option">
+                    <input type="radio" name="delivery_method" value="Pickup" checked>
+                    <span>
+                        <strong>Pickup</strong>
+                        <small>Collect from Sweet Souls Bakery · Free</small>
+                    </span>
+                </label>
+                <label class="method-option">
+                    <input type="radio" name="delivery_method" value="Delivery">
+                    <span>
+                        <strong>Delivery</strong>
+                        <small>Local delivery · ${{ "%.2f"|format(delivery_fee) }}</small>
+                    </span>
+                </label>
+            </div>
+
+            <div class="delivery-fields" id="deliveryFields">
+                <label>
+                    Street Address
+                    <input type="text" name="street" value="{{ user['street'] }}">
+                </label>
+                <div class="form-grid three">
+                    <label>
+                        Suburb
+                        <input type="text" name="suburb" value="{{ user['suburb'] }}">
+                    </label>
+                    <label>
+                        State
+                        <select name="state">
+                            {% for state in ['Victoria','New South Wales','Queensland','South Australia','Western Australia','Tasmania','Northern Territory','ACT'] %}
+                            <option {% if user['state'] == state %}selected{% endif %}>{{ state }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>
+                        Postcode
+                        <input type="text" name="postcode" value="{{ user['postcode'] }}">
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section class="checkout-card">
+            <h2>Timing and Notes</h2>
+            <div class="form-grid two">
+                <label>
+                    Requested Date
+                    <input type="date" name="requested_date" min="{{ today }}">
+                </label>
+                <label>
+                    Payment Method
+                    <select name="payment_method">
+                        <option>Pay on pickup/delivery</option>
+                        <option>Invoice from Sweet Souls Bakery</option>
+                    </select>
+                </label>
+            </div>
+            <label class="full-field">
+                Order Notes
+                <textarea name="notes" rows="4" maxlength="800" placeholder="Add timing, delivery or celebration notes here."></textarea>
+            </label>
+            <p class="payment-note">BakeFlow does not store card details. Payment is arranged with Sweet Souls Bakery.</p>
+        </section>
+
+        <button type="submit" class="place-order-btn">Place Order</button>
+    </form>
+
+    <aside class="checkout-summary">
+        <h2>Your Order</h2>
+
+        <div class="summary-items">
+            {% for item in cart_items %}
+            <div class="summary-item">
+                <img src="{{ url_for('static', filename='images/' + item['image']) }}" alt="{{ item['name'] }}">
+                <div><strong>{{ item['name'] }}</strong><span>Qty {{ item['quantity'] }}</span></div>
+                <b>${{ "%.2f"|format(item['item_total']) }}</b>
+            </div>
+            {% endfor %}
+
+            {% for item in custom_items %}
+            <div class="summary-item custom-summary-item">
+                <div class="colour-dot" style="--dot: {{ item['colour'] }}"></div>
+                <div><strong>Custom {{ item['flavour'] }} Cake</strong><span>{{ item['size'] }} · Qty {{ item['quantity'] }}</span></div>
+                <b>${{ "%.2f"|format(item['item_total']) }}</b>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="price-lines">
+            <div><span>Subtotal</span><strong>${{ "%.2f"|format(subtotal) }}</strong></div>
+            <div><span>Delivery</span><strong id="deliveryCost">Free</strong></div>
+            <div class="grand-total"><span>Total</span><strong id="checkoutTotal" data-subtotal="{{ subtotal }}" data-fee="{{ delivery_fee }}">${{ "%.2f"|format(subtotal) }}</strong></div>
+        </div>
+
+        <a href="{{ url_for('cart') }}" class="back-cart">← Return to cart</a>
+    </aside>
+</main>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
+{% endblock %}

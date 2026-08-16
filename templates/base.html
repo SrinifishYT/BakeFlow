@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BakeFlow{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    {% block page_css %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+</head>
+<body>
+
+    <!-- Shared navigation -->
+    <nav class="main-nav">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">BakeFlow</a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a class="{% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">Home</a></li>
+            <li><a class="{% if request.endpoint in ['products', 'product_details'] %}active{% endif %}" href="{{ url_for('products') }}">Products</a></li>
+            <li><a class="{% if request.endpoint in ['custom_cakes', 'add_saved_custom_cake'] %}active{% endif %}" href="{{ url_for('custom_cakes') }}">Custom Cakes</a></li>
+            <li><a class="{% if request.endpoint in ['smartbake', 'smartbake_api'] %}active{% endif %}" href="{{ url_for('smartbake') }}">SmartBake AI</a></li>
+            <li><a class="{% if request.endpoint in ['orders', 'order_details'] %}active{% endif %}" href="{{ url_for('orders') }}">Orders</a></li>
+            <li><a class="{% if request.endpoint == 'contact' %}active{% endif %}" href="{{ url_for('contact') }}">Contact</a></li>
+            <li>
+                <a class="cart-link {% if request.endpoint in ['cart', 'checkout'] %}active{% endif %}" href="{{ url_for('cart') }}">
+                    Cart
+                    {% if cart_count > 0 %}
+                        <span class="cart-badge">{{ cart_count }}</span>
+                    {% endif %}
+                </a>
+            </li>
+            {% if current_role == 'Admin' %}
+                <li><a class="{% if request.endpoint and request.endpoint.startswith('admin') %}active{% endif %}" href="{{ url_for('admin_dashboard') }}">Admin</a></li>
+            {% endif %}
+        </ul>
+
+        <div class="nav-right">
+            <span class="username">Welcome, {{ username }}</span>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Shared flash messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-message">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+    <footer class="site-footer">
+        <p>© 2026 Sweet Souls Bakery | BakeFlow</p>
+    </footer>
+
+    {% block page_js %}{% endblock %}
+</body>
+</html>

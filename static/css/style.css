@@ -522,3 +522,10 @@ button:hover{
     text-decoration:underline;
 
 }
+
+/* Small login security label */
+.secure-note{
+    color:#8b776d;
+    font-size:13px;
+    font-weight:600;
+}

@@ -1,480 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
+{% block title %}BakeFlow | Products{% endblock %}
 
-    <!-- Basic page information -->
-    <meta charset="UTF-8">
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+{% endblock %}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
+<section class="page-header">
+    <p class="page-label">Sweet Souls Bakery</p>
+    <h1>Our Bakery Collection</h1>
+    <p>Browse handcrafted cakes and find the perfect option for your celebration.</p>
+</section>
 
-    <title>BakeFlow | Products</title>
+<form class="search-section" method="GET" action="{{ url_for('products') }}">
+    <input type="text" name="search" value="{{ search }}" placeholder="Search cakes..." aria-label="Search cakes">
 
-    <!-- Products page stylesheet -->
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/products.css') }}"
-    >
+    <select name="sort" aria-label="Sort products">
+        <option value="name" {% if selected_sort == 'name' %}selected{% endif %}>Sort: Name</option>
+        <option value="price-low" {% if selected_sort == 'price-low' %}selected{% endif %}>Price: Low to High</option>
+        <option value="price-high" {% if selected_sort == 'price-high' %}selected{% endif %}>Price: High to Low</option>
+        <option value="stock" {% if selected_sort == 'stock' %}selected{% endif %}>Most Available</option>
+    </select>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    {% if selected_category != 'All' %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
+    {% if selected_price != 'All' %}<input type="hidden" name="price" value="{{ selected_price }}">{% endif %}
+    <button type="submit" class="search-btn">Search</button>
+</form>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-</head>
-
-<body>
-
-    <!-- Navigation bar -->
-
-    <nav class="main-nav">
-
-        <!-- BakeFlow logo -->
-
-        <div class="logo">
-
-            <a href="{{ url_for('home') }}">
-
-                BakeFlow
-
+<main class="products-container">
+    <aside class="sidebar">
+        <div class="filter-group">
+            <h2>Categories</h2>
+            <a class="filter-link {% if selected_category == 'All' %}selected{% endif %}" href="{{ url_for('products', search=search, price=selected_price, sort=selected_sort) }}">All Cakes</a>
+            {% for category in categories %}
+            <a class="filter-link {% if selected_category == category['category'] %}selected{% endif %}" href="{{ url_for('products', search=search, category=category['category'], price=selected_price, sort=selected_sort) }}">
+                {{ category['category'] }}
             </a>
-
+            {% endfor %}
         </div>
 
-        <!-- Main navigation links -->
-
-        <ul class="nav-links">
-
-            <li>
-
-                <a href="{{ url_for('home') }}">
-
-                    Home
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a
-                    class="active"
-                    href="{{ url_for('products') }}"
-                >
-
-                    Products
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('custom_cakes') }}">
-
-                    Custom Cakes
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('smartbake') }}">
-
-                    SmartBake AI
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('orders') }}">
-
-                    Orders
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('contact') }}">
-
-                    Contact
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="{{ url_for('cart') }}">
-
-                    🛒 Cart
-
-                </a>
-
-            </li>
-
-        </ul>
-
-        <!-- User details and logout -->
-
-        <div class="nav-right">
-
-            <span class="username">
-
-                Welcome, {{ username }}
-
-            </span>
-
-            <a
-                href="{{ url_for('logout') }}"
-                class="logout-btn"
-            >
-
-                Logout
-
-            </a>
-
+        <div class="filter-group">
+            <h2>Price</h2>
+            <a class="filter-link {% if selected_price == 'All' %}selected{% endif %}" href="{{ url_for('products', search=search, category=selected_category, sort=selected_sort) }}">All Prices</a>
+            <a class="filter-link {% if selected_price == 'under-75' %}selected{% endif %}" href="{{ url_for('products', search=search, category=selected_category, price='under-75', sort=selected_sort) }}">Under $75</a>
+            <a class="filter-link {% if selected_price == '75-85' %}selected{% endif %}" href="{{ url_for('products', search=search, category=selected_category, price='75-85', sort=selected_sort) }}">$75–$85</a>
+            <a class="filter-link {% if selected_price == 'over-85' %}selected{% endif %}" href="{{ url_for('products', search=search, category=selected_category, price='over-85', sort=selected_sort) }}">Over $85</a>
         </div>
 
-    </nav>
-
-    <!-- Flash messages -->
-
-    {% with messages = get_flashed_messages() %}
-
-        {% if messages %}
-
-            <div class="flash-message">
-
-                {{ messages[0] }}
-
-            </div>
-
-        {% endif %}
-
-    {% endwith %}
-
-    <!-- Page heading -->
-
-    <section class="page-header">
-
-        <p class="page-label">
-
-            Sweet Souls Bakery
-
-        </p>
-
-        <h1>
-
-            Our Bakery Collection
-
-        </h1>
-
-        <p>
-
-            Browse handcrafted cakes made fresh every day.
-
-        </p>
-
-    </section>
-
-    <!-- Search and sorting -->
-
-    <section class="search-section">
-
-        <input
-            type="text"
-            placeholder="Search cakes..."
-            aria-label="Search cakes"
-        >
-
-        <select aria-label="Sort products">
-
-            <option value="">
-
-                Sort By
-
-            </option>
-
-            <option value="price-low">
-
-                Price: Low to High
-
-            </option>
-
-            <option value="price-high">
-
-                Price: High to Low
-
-            </option>
-
-            <option value="best-selling">
-
-                Best Selling
-
-            </option>
-
-            <option value="newest">
-
-                Newest
-
-            </option>
-
-        </select>
-
-    </section>
-
-    <!-- Main product area -->
-
-    <main class="products-container">
-
-        <!-- Product filters -->
-
-        <aside class="sidebar">
-
-            <div class="filter-group">
-
-                <h2>
-
-                    Categories
-
-                </h2>
-
-                <ul>
-
-                    <li>
-
-                        <button type="button">
-
-                            Birthday Cakes
-
-                        </button>
-
-                    </li>
-
-                    <li>
-
-                        <button type="button">
-
-                            Wedding Cakes
-
-                        </button>
-
-                    </li>
-
-                    <li>
-
-                        <button type="button">
-
-                            Cupcakes
-
-                        </button>
-
-                    </li>
-
-                    <li>
-
-                        <button type="button">
-
-                            Cookies
-
-                        </button>
-
-                    </li>
-
-                    <li>
-
-                        <button type="button">
-
-                            Brownies
-
-                        </button>
-
-                    </li>
-
-                    <li>
-
-                        <button type="button">
-
-                            Cheesecakes
-
-                        </button>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <div class="filter-group">
-
-                <h2>
-
-                    Price
-
-                </h2>
-
-                <ul>
-
-                    <li>
-
-                        <button type="button">
-
-                            Under $30
-
-                        </button>
-
-                    </li>
-
-                    <li>
-
-                        <button type="button">
-
-                            $30–$60
-
-                        </button>
-
-                    </li>
-
-                    <li>
-
-                        <button type="button">
-
-                            $60+
-
-                        </button>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </aside>
-
-        <!-- Products loaded from SQLite -->
-
-        <section class="products-grid">
-
-            {% if products %}
-
-                {% for product in products %}
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-
-                            <img
-                                src="{{ url_for('static', filename='images/' + product['image']) }}"
-                                alt="{{ product['name'] }}"
-                            >
-
-                        </div>
-
-                        <div class="product-content">
-
-                            <span class="product-category">
-
-                                {{ product['category'] }}
-
-                            </span>
-
-                            <h2>
-
-                                {{ product['name'] }}
-
-                            </h2>
-
-                            <p>
-
-                                {{ product['description'] }}
-
-                            </p>
-
-                            <div class="product-bottom">
-
-                                <div class="price">
-
-                                    ${{ "%.2f"|format(product['price']) }}
-
-                                </div>
-
-                                <div class="buttons">
-
-                                    <a
-                                        href="{{ url_for('products') }}"
-                                        class="details-btn"
-                                    >
-
-                                        View Details
-
-                                    </a>
-
-                                    <a
-                                        href="{{ url_for('add_to_cart', product_id=product['id']) }}"
-                                        class="cart-btn"
-                                    >
-
-                                        Add to Cart
-
-                                    </a>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-                {% endfor %}
-
-            {% else %}
-
-                <div class="empty-products">
-
-                    <h2>
-
-                        No products available
-
-                    </h2>
-
-                    <p>
-
-                        New Sweet Souls products will appear here soon.
-
-                    </p>
-
+        <a href="{{ url_for('products') }}" class="clear-filters">Clear Filters</a>
+    </aside>
+
+    <section class="products-grid">
+        {% if products %}
+            {% for product in products %}
+            <article class="product-card">
+                <div class="product-image">
+                    <img src="{{ url_for('static', filename='images/' + product['image']) }}" alt="{{ product['name'] }}">
+                    {% if product['stock'] <= 0 %}
+                        <span class="stock-badge sold-out">Sold Out</span>
+                    {% elif product['stock'] <= 5 %}
+                        <span class="stock-badge">Only {{ product['stock'] }} left</span>
+                    {% endif %}
                 </div>
 
-            {% endif %}
+                <div class="product-content">
+                    <span class="product-category">{{ product['category'] }}</span>
+                    <h2>{{ product['name'] }}</h2>
+                    <p>{{ product['description'] }}</p>
 
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-
-    <footer>
-
-        <p>
-
-            © 2026 Sweet Souls Bakery | BakeFlow
-
-        </p>
-
-    </footer>
-
-</body>
-
-</html>
+                    <div class="product-bottom">
+                        <div class="price">${{ "%.2f"|format(product['price']) }}</div>
+                        <div class="buttons">
+                            <a href="{{ url_for('product_details', product_id=product['id']) }}" class="details-btn">View Details</a>
+                            {% if product['stock'] > 0 %}
+                            <form action="{{ url_for('add_to_cart', product_id=product['id']) }}" method="POST">
+                                <button type="submit" class="cart-btn">Add to Cart</button>
+                            </form>
+                            {% else %}
+                            <button class="cart-btn disabled" disabled>Sold Out</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-products">
+                <h2>No cakes matched your filters</h2>
+                <p>Try another search or clear the filters to view the full collection.</p>
+                <a href="{{ url_for('products') }}">View All Cakes</a>
+            </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

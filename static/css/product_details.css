@@ -1,0 +1,24 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#FFF8F3;color:#444}
+.product-page{width:min(92%,1180px);margin:45px auto 80px}
+.back-link{display:inline-block;margin-bottom:22px;color:#5C4033;font-weight:700;text-decoration:none}
+.product-detail-card{display:grid;grid-template-columns:1.05fr .95fr;overflow:hidden;border-radius:26px;background:#fff;box-shadow:0 14px 36px rgba(0,0,0,.09)}
+.detail-image{min-height:560px;background:#eee}
+.detail-image img{width:100%;height:100%;object-fit:cover}
+.detail-info{padding:55px}
+.category{color:#8e6654;font-size:13px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase}
+.detail-info h1{margin:10px 0 16px;font-family:'Outfit',sans-serif;font-size:48px;line-height:1.08;color:#5C4033}
+.description{color:#676767;font-size:18px;line-height:1.7}
+.detail-price{margin:25px 0 10px;font-size:34px;font-weight:800;color:#5C4033}
+.availability{display:inline-block;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:800}
+.available{background:#e4f4e3;color:#34743a}.low{background:#fff0d1;color:#8a620b}.sold{background:#fde5e5;color:#9a3030}
+.product-notes{margin:28px 0;display:grid;gap:12px}
+.product-notes div{padding:14px 16px;border-radius:12px;background:#FCF7F2}
+.product-notes strong,.product-notes span{display:block}.product-notes strong{margin-bottom:4px;color:#5C4033}.product-notes span{color:#777;font-size:14px}
+.add-form{display:grid;grid-template-columns:auto 90px 1fr;align-items:end;gap:12px}
+.add-form label{grid-column:1/2;align-self:center;font-weight:700;color:#5C4033}
+.add-form input{width:90px;padding:13px;border:1px solid #d8c9c0;border-radius:10px;font:inherit}
+.add-form button{padding:14px;border:0;border-radius:11px;background:#5C4033;color:#fff;font:inherit;font-weight:800;cursor:pointer}.add-form button:hover{background:#7A5646}
+.related-section{margin-top:55px}.related-section h2{margin-bottom:20px;font-family:'Outfit',sans-serif;font-size:31px;color:#5C4033}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-card{overflow:hidden;border-radius:18px;background:#fff;color:inherit;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.07)}.related-card img{width:100%;height:180px;object-fit:cover}.related-card div{padding:17px}.related-card h3{font-family:'Outfit',sans-serif;color:#5C4033}.related-card span{display:block;margin-top:5px;font-weight:800;color:#7A5646}
+@media(max-width:900px){.product-detail-card{grid-template-columns:1fr}.detail-image{min-height:380px}.detail-info{padding:35px}.related-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.detail-info{padding:28px 22px}.detail-info h1{font-size:38px}.add-form{grid-template-columns:90px 1fr}.add-form label{grid-column:1/-1}.related-grid{grid-template-columns:1fr}}
